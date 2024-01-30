@@ -13,3 +13,9 @@ This repository contain different method to locate earthquake in a higly simplif
   - plot_diff_cost_evol: function to plot the change in variation of the rmse through the epochs.
 
 **example.py**: this script contain exemples on how to use the functions from gradient_descent.py and graph.py.
+
+### Plots:
+Here are examples and statistics of descente_gradient function:
+
+
+
