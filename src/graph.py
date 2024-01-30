@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 #=============================================================================
 def plot_dict_stations(stations, event=None, samples=None, save_path=None):
 	"""
-	Function to plot the position of the station and of the tesed
+	Function to plot the position of the station and of the tested
 	earthquake(s) if given.
 
 	Parameters
