@@ -31,15 +31,17 @@ def centrering(stations, key, event=None):
 
 	"""
 	site_ref = deepcopy(stations[key])
-	event['X'] = event['X']-site_ref['X']
-	event['Y'] = event['Y']-site_ref['Y']
-	event['Z'] = event['Z']-site_ref['Z']
-	event['t'] = event['t']-site_ref['t']
-	site_ref = deepcopy(stations[key])
+	if type(event) == dict:
+		event['X'] = event['X']-site_ref['X']
+		event['Y'] = event['Y']-site_ref['Y']
+		event['Z'] = event['Z']-site_ref['Z']
+		event['t'] = event['t']-site_ref['t']
+
 	for i in stations:
 		stations[i]['X'] = stations[i]['X']-site_ref['X']
 		stations[i]['Y'] = stations[i]['Y']-site_ref['Y']
 		stations[i]['t'] = stations[i]['t']-site_ref['t']
+
 	if type(event) == dict:
 		return stations, event
 	else:
