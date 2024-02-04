@@ -19,7 +19,7 @@ This repository contain different method to locate earthquake in a higly simplif
 Here are examples and statistics of descente_gradient function:I have made the function runs from 5 000 random initialization for a same earthquake. As we can see on the first plot, all models reach a small value of RMSE. But if we look at the second plot we can see that some run actually gets lost with a distance between the model and the true hypocenter larger than 800 meters. This comes from the fact that all stations have an altitude equal to zero. Consequently, for the algorithm the altitude can be positive or negative without effect on the loss. It also highlights the importance of the initialisation with some that can lead to absurd results. Still, even with these limitations, the third plot shows that the convergence is actually mostly a success with a distance between the model and the prediction lower than 15 meters.
 ![Exemple picture](img/rmse_5000single.png)
 
-![Exemple picture](img/dist_1_5000single.png.png)
+![Exemple picture](img/dist_1_5000single.png)
 
 ![Exemple picture](img/dist_2_5000single.png)
 
