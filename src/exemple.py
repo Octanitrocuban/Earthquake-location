@@ -49,11 +49,12 @@ print('True values:', Event, '\n')
 print('Descente from one samples')
 Supp  = {'X':np.random.uniform(-.5, .5)*fact,
 		 'Y':np.random.uniform(-.5, .5)*fact,
-		 'Z':-500, 't':-0.5}
+		 'Z':np.random.uniform(-1., 0.)*fact,
+		 't':np.random.uniform(-1., 0.)}
 
 event_test, Cost_story, Hist = gd.descente_gradient(Stations, Supp,
-												    1000000, l_r_m=0.2,
-													patience=10000)
+												    100000, l_r_m=0.1,
+													patience=1000)
 
 
 gh.plot_history_dict(Stations, event_test, Hist, Cost_story, Event, 100)
