@@ -3,14 +3,20 @@ This repository contain different method to locate earthquake in a higly simplif
 
 ### There are 3 scripts:
 **gradient_descent.py**: this module contains function to compute gradient descent through exploration algorithms.
+  - print_sample_array: function to plot samples array as dictionary.
   - centrering: function to normalise (centralise) stations and event if given.
   - calc_misfit: function to calculate misfit between observed and calculated arrival times.
   - descente_gradient: function to make a gradient descent from a given test event and data from stations.
+  - ensemble_descent: function to make a gradient descent with many samples in a vectorised method.
 
 **graph.py**: this module contain functions to plot the state of the search and the history of the localisation of the earthquake.
-  - plot_dict_stations: function to plot the position of the station and of the tested earthquake(s) if given.
+  - plot_dict_stations: function to plot the position of the station, the true event and of the tested earthquake(s) model(s) if given.
+  - plot_vect_stations: function to plot the position of the station, the true event and of the tested earthquake(s) model(s) if given.
   - plot_history_dict: function to plot the evolution of the variables.
+  - plot_history_vect: function to plot the evolution of the variables.
+  - plot_history_vect_ed: function to plot the evolution of the variables for the ensemble descente method.
   - plot_diff_cost_evol: function to plot the change in variation of the rmse through the epochs.
+  - plot_diff_cost_evol_ed: function to plot the change in variation of the rmse through the epochs for the ensemble descente method.
 
 **example.py**: this script contain exemples on how to use the functions from gradient_descent.py and graph.py.
 
@@ -35,3 +41,22 @@ The following plots shows: the history of the loss of a model, the history of th
 ![Exemple picture](img/depth_hist_single_descente.png)
 
 ![Exemple picture](img/map_hist_single_descente.png)
+
+
+## The ensemble descente method:
+The computation time for one use higly depends on thenumber of samples. For the parameter given in example () it took ~ . second.
+
+### Explanations
+The ensemble descente method is a vectorised inmplementation of multiple single descente. It will train multiple earthquake models independently but at the same time. The goal is to reduce the influance of random parameter initialization.
+
+### Plots
+
+
+
+# Versions:
+
+### 1.0
+Implementation of the single descente method and associated plot functions.
+
+#### 1.1
+Implementation of the ensemble descente method and associated plot functions.
