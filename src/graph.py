@@ -490,7 +490,8 @@ def custom_2d_hist(array, bins=(60, 100)):
 		pdf[:, i] = np.histogram(
 						np.ravel(array[int(scale_x[i]):int(scale_x[i+1])]),
 								bins=bins[0],
-								range=(scale_y[0], scale_y[-1]))[0]
+								range=(scale_y[0], scale_y[-1]))[0]/(
+										int(scale_x[i+1])-int(scale_x[i]))
 
 	pdf[pdf == 0] = np.nan
 	return pdf, scale_x, scale_y
@@ -546,6 +547,7 @@ def show_density_history_ed(stations, history, loss, true_event=None,
 
 	plt.xlabel('iterations', fontsize=11)
 	plt.ylabel('rmse', fontsize=11)
+	plt.colorbar(shrink=0.4, label='Number of model per cell')
 	if type(save_path) == str:
 		plt.savefig(save_path+'loss_hist_pdf_ed.png', bbox_inches='tight')
 
@@ -565,6 +567,7 @@ def show_density_history_ed(stations, history, loss, true_event=None,
 
 	plt.xlabel('iterations', fontsize=11)
 	plt.ylabel('time (s)', fontsize=11)
+	plt.colorbar(shrink=0.4, label='Number of model per cell')
 	if type(save_path) == str:
 		plt.savefig(save_path+'time_hist_pdf_ed.png', bbox_inches='tight')
 
@@ -584,6 +587,7 @@ def show_density_history_ed(stations, history, loss, true_event=None,
 
 	plt.xlabel('iterations', fontsize=11)
 	plt.ylabel('meters', fontsize=11)
+	plt.colorbar(shrink=0.4, label='Number of model per cell')
 	if type(save_path) == str:
 		plt.savefig(save_path+'depth_hist_pdf_ed.png', bbox_inches='tight')
 
@@ -602,6 +606,13 @@ def show_density_history_ed(stations, history, loss, true_event=None,
 
 	pdf_map = pdf_map[::-1]
 	pdf_map[pdf_map == 0] = np.nan
+	de = np.max(stations, axis=1)-np.min(stations, axis=1)
+	xlims = (np.min(stations[:, 0])-de[0]*0.05,
+			 np.max(stations[:, 0])+de[0]*0.05,)
+
+	ylims = (np.min(stations[:, 1])-de[1]*0.07,
+			 np.max(stations[:, 1])+de[1]*0.07,)
+
 	plt.figure(figsize=(10, 10))
 	plt.title('Map of stations, epicenter and paths from gradient descent',
 			  fontsize=12)
@@ -614,16 +625,18 @@ def show_density_history_ed(stations, history, loss, true_event=None,
 	plt.grid(True, zorder=1)
 	plt.plot(stations[:, 0], stations[:, 1], 'bv', ms=5, zorder=2, label='Station')
 	for i in range(len(stations)):
-		plt.text(stations[i, 0], stations[i, 1]+20, 'S'+str(i), zorder=3,
+		plt.text(stations[i, 0], stations[i, 1]+15, 'S'+str(i), zorder=3,
 				 ha='center')
 
 	if type(true_event) == np.ndarray:
 		plt.plot(true_event[0], true_event[1], 'r*', zorder=2, label='Event')
-		plt.text(true_event[0], true_event[1]+20, 'E', zorder=3, ha='center')
+		plt.text(true_event[0], true_event[1]+15, 'E', zorder=3, ha='center')
 
-	plt.plot(history[-1, :, 0], history[-1, :, 1], 'g.')
+	plt.plot(history[-1, :, 0], history[-1, :, 1], 'g.', label='Trained models')
 	plt.colorbar(shrink=0.7, label='Number of model per cell')
 	plt.legend()
+	plt.xlim(xlims[0], xlims[1])
+	plt.ylim(ylims[0], ylims[1])
 	plt.xlabel('X (in metres)', fontsize=15)
 	plt.ylabel('Y (in metres)', fontsize=15)
 	if type(save_path) == str:
