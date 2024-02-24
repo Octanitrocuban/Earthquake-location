@@ -44,13 +44,13 @@ The following plots shows: the history of the loss of a model, the history of th
 
 
 ## The ensemble descente method:
-The computation time for one use higly depends on thenumber of samples. For 5 000 samples and 100 000 epochs it took ~ 49.6. second.
+The computation time for one use higly depends on thenumber of samples. For 5 000 samples and 23 001 epochs it took ~ 49.6. second.
 
 ### Explanations
 The ensemble descente method is a vectorised inmplementation of multiple single descente. It will train multiple earthquake models independently but at the same time. The goal is to reduce the influance of random parameter initialization.
 
 ### Plots
-
+The first plot is the 
 
 
 # Versions:
