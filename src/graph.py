@@ -382,45 +382,33 @@ def plot_history_vect_ed(stations, history, loss, true_event=None,
 	# RMSE from each epochs
 	plt.figure()
 	plt.title('Cost function (loss)', fontsize=12)
-	for i in range(loss.shape[1]):
-		plt.plot(x_axis, loss[::samp_rate, i], 'b', lw=1)
-		plt.plot([x_axis[-1], len(loss)], [loss[x_axis[-1]], loss[-1]],
-				 color='b')
-
+	plt.plot(loss, 'b', lw=1)
 	plt.xlabel('iterations', fontsize=11)
 	plt.ylabel('rmse', fontsize=11)
 	if type(save_path) == str:
-		plt.savefig(save_path+'loss_hist_mc.png', bbox_inches='tight')
+		plt.savefig(save_path+'loss_hist_ed.png', bbox_inches='tight')
 
 	plt.show()
 
 	# Time before the earthquake was recorded by the reference station (in s)
 	plt.figure()
 	plt.title('time variations', fontsize=12)
-	for i in range(history.shape[1]):
-		plt.plot(x_axis, history[::samp_rate, i, 3], 'b', lw=1)
-		plt.plot([x_axis[-1], len(loss)],
-				 [history[x_axis[-1], i, 3], history[-1, i, 3]], color='b')
-
+	plt.plot(history[:, :, 3], 'b', lw=1)
 	plt.xlabel('iterations', fontsize=11)
 	plt.ylabel('time (s)', fontsize=11)
 	if type(save_path) == str:
-		plt.savefig(save_path+'time_hist_mc.png', bbox_inches='tight')
+		plt.savefig(save_path+'time_hist_ed.png', bbox_inches='tight')
 
 	plt.show()
 
 	# Depth in relation to the reference station (in m)
 	plt.figure()
 	plt.title('z variations', fontsize=12)
-	for i in range(history.shape[1]):
-		plt.plot(x_axis, history[::samp_rate, i, 2], 'b', lw=1)
-		plt.plot([x_axis[-1], len(loss)],
-				 [history[x_axis[-1], i, 2], history[-1, i, 2]], color='b')
-
+	plt.plot(history[:, :, 2], 'b', lw=1)
 	plt.xlabel('iterations', fontsize=11)
 	plt.ylabel('meters', fontsize=11)
 	if type(save_path) == str:
-		plt.savefig(save_path+'depth_hist_mc.png', bbox_inches='tight')
+		plt.savefig(save_path+'depth_hist_ed.png', bbox_inches='tight')
 
 	plt.show()
 
@@ -463,7 +451,183 @@ def plot_history_vect_ed(stations, history, loss, true_event=None,
 	plt.ylabel('Y (in metres)', fontsize=15)
 	plt.axis('equal')
 	if type(save_path) == str:
-		plt.savefig(save_path+'map_hist_mc.png', bbox_inches='tight')
+		plt.savefig(save_path+'map_hist_ed.png', bbox_inches='tight')
+
+	plt.show()
+
+def custom_2d_hist(array, bins=(60, 100)):
+	"""
+	A custom function to compute 2d hitogram on the evolution of a population
+	of models.
+
+	Parameters
+	----------
+	array : numpy.ndarray
+		A 2d array. Shape aof the array should be : (number of epoch, number
+		of model)
+	bins : tuple, optional
+		Number of cell in the two axis direction. The first axis is for the
+		distribution of values took by the mode at the i-th epoch. The
+		default is (60, 100).
+
+	Returns
+	-------
+	pdf : numpy.ndarray
+		A 2d array with the distribution of the values took by the models
+		through their evolution.
+	scale_x : numpy.ndarray
+		A 1d array, with the boundary values of the bins through the time
+		axis.
+	scale_y : numpy.ndarray
+		A 1d array, with the boundary values of the bins through the values
+		axis.
+
+	"""
+	scale_x = np.linspace(0, array.shape[0], bins[1]+1)
+	scale_y = np.linspace(np.min(array), np.max(array), bins[0]+1)
+	pdf = np.zeros(bins)
+	for i in range(bins[1]):
+		pdf[:, i] = np.histogram(
+						np.ravel(array[int(scale_x[i]):int(scale_x[i+1])]),
+								bins=bins[0],
+								range=(scale_y[0], scale_y[-1]))[0]
+
+	pdf[pdf == 0] = np.nan
+	return pdf, scale_x, scale_y
+
+def show_density_history_ed(stations, history, loss, true_event=None,
+							bins_evol=(60, 100), bins_map=(100, 100),
+							save_path=None):
+	"""
+	Function to show the evolution of the variables for the ensemble descente
+	method through density plots.
+
+	Parameters
+	----------
+	stations : numpy.ndarray
+		Numpy array containing station data.
+	history : numpy.ndarray
+		A 2d array listing the evolution of the variables of the model.
+	loss : numpy.ndarray
+		A 1d array listing the evolution of the rmse between the model and the
+		data.
+	true_event : numpy.ndarray, optional
+		True event to locate. The default is None.
+	bins_evol : tuple, optional
+		Number of cell in the two axis direction. The first axis is for the
+		distribution of values took by the mode at the i-th epoch. The
+		default is (60, 100).
+	bins_map : tuple, optional
+		Number of cell in the x and y axis direction for the distribution map
+		of the position of the trained models.
+	save_path : str, optional
+		Path to the folder wher the graph will be saved. The default is None.
+
+	Returns
+	-------
+	None.
+
+	"""
+	if type(save_path) == str:
+		if save_path[-1] != '/':
+			save_path = save_path+'/'
+
+	# Loss errors
+	pdf_loss, sc_epoch, sc_loss = custom_2d_hist(loss, bins_evol)
+	plt.figure(figsize=(12, 12))
+	plt.title('Cost function (loss)', fontsize=12)
+	plt.grid(True)
+	plt.imshow(pdf_loss[::-1], interpolation='none')
+	plt.xticks(np.linspace(0, len(sc_epoch), 11),
+			   np.round(np.linspace(sc_epoch[0], sc_epoch[-1], 11), 0))
+
+	plt.yticks(np.linspace(len(sc_loss), 0, 11),
+			   np.round(np.linspace(sc_loss[0], sc_loss[-1], 11), 6))
+
+	plt.xlabel('iterations', fontsize=11)
+	plt.ylabel('rmse', fontsize=11)
+	if type(save_path) == str:
+		plt.savefig(save_path+'loss_hist_pdf_ed.png', bbox_inches='tight')
+
+	plt.show()
+
+	# Time before the earthquake was recorded by the reference station (in s)
+	pdf_time, sc_epoch, sc_time = custom_2d_hist(history[:, :, 3], bins_evol)
+	plt.figure(figsize=(12, 12))
+	plt.title('time variations', fontsize=12)
+	plt.grid(True)
+	plt.imshow(pdf_time[::-1], interpolation='none')
+	plt.xticks(np.linspace(0, len(sc_epoch), 11),
+			   np.round(np.linspace(sc_epoch[0], sc_epoch[-1], 11), 0))
+
+	plt.yticks(np.linspace(len(sc_loss), 0, 11),
+			   np.round(np.linspace(sc_time[0], sc_time[-1], 11), 6))
+
+	plt.xlabel('iterations', fontsize=11)
+	plt.ylabel('time (s)', fontsize=11)
+	if type(save_path) == str:
+		plt.savefig(save_path+'time_hist_pdf_ed.png', bbox_inches='tight')
+
+	plt.show()
+
+	# Depth in relation to the reference station (in m)
+	pdf_depth, sc_epoch, sc_depth = custom_2d_hist(history[:, :, 2], bins_evol)
+	plt.figure(figsize=(12, 12))
+	plt.title('z variations', fontsize=12)
+	plt.grid(True)
+	plt.imshow(pdf_depth[::-1], interpolation='none')
+	plt.xticks(np.linspace(0, len(sc_epoch), 11),
+			   np.round(np.linspace(sc_epoch[0], sc_epoch[-1], 11), 0))
+
+	plt.yticks(np.linspace(len(sc_depth), 0, 11),
+			   np.round(np.linspace(sc_depth[0], sc_depth[-1], 11), 6))
+
+	plt.xlabel('iterations', fontsize=11)
+	plt.ylabel('meters', fontsize=11)
+	if type(save_path) == str:
+		plt.savefig(save_path+'depth_hist_pdf_ed.png', bbox_inches='tight')
+
+	plt.show()
+
+	# X-Y axis
+	pdf_map, sc_x_axis, sc_y_axis = np.histogram2d(history[-1, :, 1], 
+												   history[-1, :, 0],
+												   bins=bins_map,
+												   range=((
+													  np.min(stations[:, 0]),
+													  np.max(stations[:, 0])),
+													 (np.min(stations[:, 1]),
+													  np.max(stations[:, 1]))
+												   ))
+
+	pdf_map = pdf_map[::-1]
+	pdf_map[pdf_map == 0] = np.nan
+	plt.figure(figsize=(10, 10))
+	plt.title('Map of stations, epicenter and paths from gradient descent',
+			  fontsize=12)
+
+	plt.imshow(pdf_map, interpolation='none', extent=[np.min(stations[:, 0]),
+													  np.max(stations[:, 0]),
+													  np.min(stations[:, 1]),
+													  np.max(stations[:, 1])])
+
+	plt.grid(True, zorder=1)
+	plt.plot(stations[:, 0], stations[:, 1], 'bv', ms=5, zorder=2, label='Station')
+	for i in range(len(stations)):
+		plt.text(stations[i, 0], stations[i, 1]+20, 'S'+str(i), zorder=3,
+				 ha='center')
+
+	if type(true_event) == np.ndarray:
+		plt.plot(true_event[0], true_event[1], 'r*', zorder=2, label='Event')
+		plt.text(true_event[0], true_event[1]+20, 'E', zorder=3, ha='center')
+
+	plt.plot(history[-1, :, 0], history[-1, :, 1], 'g.')
+	plt.colorbar(shrink=0.7, label='Number of model per cell')
+	plt.legend()
+	plt.xlabel('X (in metres)', fontsize=15)
+	plt.ylabel('Y (in metres)', fontsize=15)
+	if type(save_path) == str:
+		plt.savefig(save_path+'map_hist_dense_ed.png', bbox_inches='tight')
 
 	plt.show()
 
