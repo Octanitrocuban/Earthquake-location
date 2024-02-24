@@ -424,6 +424,7 @@ def plot_history_vect_ed(stations, history, loss, true_event=None,
 
 	plt.show()
 
+	# X-Y axis
 	plt.figure(figsize=(10, 10))
 	plt.title('Map of stations, epicenter and paths from gradient descent',
 			  fontsize=12)
@@ -431,7 +432,7 @@ def plot_history_vect_ed(stations, history, loss, true_event=None,
 	plt.grid(True, zorder=1)
 	plt.plot(stations[:, 0], stations[:, 1], 'bv', ms=5, zorder=2, label='Station')
 	for i in range(len(stations)):
-		plt.text(stations[i, 0, stations[i, 1]]+20, 'S'+str(i), zorder=3,
+		plt.text(stations[i, 0], stations[i, 1]+20, 'S'+str(i), zorder=3,
 				 ha='center')
 
 	if type(true_event) == np.ndarray:
