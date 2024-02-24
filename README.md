@@ -34,7 +34,7 @@ Here are examples and statistics of descente_gradient function:I have made the f
 
 ![Exemple picture](img/dist_2_5000single.png)
 
-The following plots shows: the history of the loss of a model, the history of the time predicted by the model, the history of the depth predicted by the model and the history of x and y prediction on a map with the position of the stations and of the event.
+The following plots shows the history of the loss of a model, the history of the time predicted by the model, the history of the depth predicted by the model and the history of x and y prediction on a map with the position of the stations and of the event.
 
 ![Exemple picture](img/loss_hist_single_descente.png)
 
@@ -52,7 +52,23 @@ The computation time for one use higly depends on thenumber of samples. For 5 00
 The ensemble descente method is a vectorised inmplementation of multiple single descente. It will train multiple earthquake models independently but at the same time. The goal is to reduce the influance of random parameter initialization.
 
 ### Plots
-The first plot is the 
+The first plot is the Root MeanSquare Error distribution of the 5 000 samples after their training. We can see that they are 0.00024 and seems to have a distribution close to the single method RMSE. The shape of the distribution is not the same because the method is sligthly different. In the single, each parameter are adjust one after the other whereas they are adjust all together in the ensemble method. Further more, in the single method, a parameter could be unchage wich is not a possible case in the ensemble method. It may be interesting to ad a kernel feature in the future for the ensemble method.
+
+The second plot shows the distance between the samples and the true targeted event. As for the single method we can see that the distances are quite low, but they aren't as good either. The closet model is still at ~ 8.94 meter of the target. The average distance is also higher. Even if the results are less good, this method is intersting because it train many samples in a lower amount of time which give more robust statistical resluts faster.
+
+![Exemple picture](img/rmse_5000ensemble.png)
+
+![Exemple picture](img/dist_5000ensemble.png)
+
+The first, second and third plots shows the history of the losses, the time predicted, and the depth predicted by the models while trainig respectivly. The fourth plot show the distribution of x and y model's predictions on a map with the position of the stations and of the event.
+
+![Exemple picture](img/loss_hist_pdf_ed.png)
+
+![Exemple picture](img/time_hist_pdf_ed.png)
+
+![Exemple picture](img/depth_hist_pdf_ed.png)
+
+![Exemple picture](img/map_hist_dense_ed.png)
 
 
 # Versions:
