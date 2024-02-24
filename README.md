@@ -15,6 +15,8 @@ This repository contain different method to locate earthquake in a higly simplif
   - plot_history_dict: function to plot the evolution of the variables.
   - plot_history_vect: function to plot the evolution of the variables.
   - plot_history_vect_ed: function to plot the evolution of the variables for the ensemble descente method.
+  - custom_2d_hist: a custom function to compute 2d hitogram on the evolution of a population of models.
+  - show_density_history_ed: function to show the evolution of the variables for the ensemble descente method through density plots.
   - plot_diff_cost_evol: function to plot the change in variation of the rmse through the epochs.
   - plot_diff_cost_evol_ed: function to plot the change in variation of the rmse through the epochs for the ensemble descente method.
 
