@@ -9,6 +9,7 @@ This repository contain different method to locate earthquake in a higly simplif
   - descente_gradient: function to make a gradient descent from a given test event and data from stations.
   - ensemble_descent: function to make a gradient descent with many samples in a vectorised method.
   - monte_carlo: function to compute a Monte Carlo method.
+  - deepening_grid_search: function to compute a deepening grid search method.
 
 **graph.py**: this module contain functions to plot the state of the search and the history of the localisation of the earthquake.
   - plot_dict_stations: function to plot the position of the station, the true event and of the tested earthquake(s) model(s) if given.
@@ -98,7 +99,7 @@ This method works by deffining a regular grid which split the parameters space i
 The main idea of this method is to zoom iteratively into the space of the parameters to find the solution. Consequently, if the number of cell is too low, the training can go in the wrong direction and get lost. There are (at least) three major improvement possibles. The first one is to keep the nodes and their loss from the i-1 iteration, and make the model enable to also serche at the second lowest error. This could help the model if it goes in the wonrg direction (i.e. a local minima). The second is increase or decrease the number of cells through the iteration. The last possibility would be to make random sampling from the cells and the averaging the results to make it more robust to local minima.
 
 ### Plots
-
+The first plot shows the evolution of the loss through iterations. We can see it will some times increase. This comes from the fact that we are evaluating a cell and so a surface only based one one point. Thus when we zoom in, the new dots will not be at the same positionS (even if they are in the same cell) and may all have higher loss. Yet the model is converging rapidly. The second plot and third plot are the evolution of time of emission and depth respectively. We can see that they are having big variation at the start of the training before converging. The times where the depth and time have high changes are correlated with the increase of error in the loss curve. The last plot shows the evolution following x and y-axis of the model. We can see that the position of the model and of the targeted event are almost perfectly superposed.
 
 ![Exemple picture](img/loss_hist_deepen_grid.png)
 
