@@ -230,7 +230,7 @@ def descente_gradient(stations, event_test, n_iteration, ran_x=1, ran_y=1,
 	print("Best event = {}, best misfit = {:.10f}".format(event_test,
 															misfit_fin))
 
-	return event_test, cost_story, history
+	return event_test, history, cost_story
 
 def ensemble_descent(stations, n_samples, learning_rates, n_it, v_propag,
 					 limits, patience=1000):
@@ -313,7 +313,7 @@ def ensemble_descent(stations, n_samples, learning_rates, n_it, v_propag,
 	best = np.argwhere(loss == np.min(loss))[-1]
 	history = np.array(history)
 	print_sample_array(history[best[0], best[1]], before='Best event = ')
-	return loss, history
+	return history, loss
 
 def monte_carlo(n_samples, limites, stations, vp=4000, sampling='random'):
 	"""
@@ -340,7 +340,7 @@ def monte_carlo(n_samples, limites, stations, vp=4000, sampling='random'):
 	Returns
 	-------
 	samples : numpy.ndarray
-		Sample created and tested.
+		Listing of the best sample at each iteration.
 	loss : numpy.ndarray
 		Root mean square error of the sample tested.
 
@@ -370,3 +370,62 @@ def monte_carlo(n_samples, limites, stations, vp=4000, sampling='random'):
 	best = samples[np.argmin(loss)]
 	print_sample_array(best, before='Best event = ')
 	return samples, loss
+
+def deepening_grid_search(stations, sampling_f, limites, depth,
+						  width_factor=2, vp=4000):
+	"""
+	Function to compute a deepening grid search method.
+
+	Parameters
+	----------
+	stations : numpy.ndarray
+		Station locations and picked arrival time.
+	sampling_f : int
+		Sampling frequence of the space of parameters to create samples. The
+		number of samples will be sampling_f to the power four.
+	limites : numpy.ndarray
+		A 2d array listing the limites of the search. The shape is (n, 2).
+		n is the number of features. The n-th line is: [lower, upper] bound.
+	depth : int
+		Depth of the search, i.e. the number of epoch.
+	width_factor : float
+		This is not learning rate ! This is a weight to counter the fast shrinked
+		of the width of the grid used in searching. The default is 2.
+	vp : float, optional
+		Assumed constant P-wave velocity. The default is 4000.
+
+	Returns
+	-------
+	samp_hist : numpy.ndarray
+		Sample created and tested.
+	cost_hist : numpy.ndarray
+		Root mean square error history of the best sample at each iteration.
+
+	"""
+	cost_hist = np.zeros(depth)
+	samp_hist = np.zeros((depth, 4))
+	lims = np.copy(limites)
+	for i in range(depth):
+		delta = np.array([-(lims[:, 1]-lims[:, 0])/sampling_f,
+						   (lims[:, 1]-lims[:, 0])/sampling_f]).T*width_factor
+
+		samples = np.meshgrid(np.linspace(lims[0, 0], lims[0, 1], sampling_f),
+							  np.linspace(lims[1, 0], lims[1, 1], sampling_f),
+							  np.linspace(lims[2, 0], lims[2, 1], sampling_f),
+							  np.linspace(lims[3, 0], lims[3, 1], sampling_f))
+
+		samples = np.array([np.ravel(samples[0]), np.ravel(samples[1]),
+							np.ravel(samples[2]), np.ravel(samples[3])]).T
+
+		distances = cdist(stations[:, :3], samples[:, :3]).T
+		t_estim = samples[:, 3:4] + distances / vp
+		loss = np.sum((t_estim - stations[:, 3])**2, axis=1)**.5 /len(stations)
+		current = samples[np.argmin(loss)]
+		lims = current[:, np.newaxis]+delta
+		samp_hist[i] = current
+		cost_hist[i] = np.min(loss)
+
+	print("Best misfit = "+str(np.min(loss)))
+	best = samples[np.argmin(loss)]
+	print_sample_array(best, before='Best event = ')
+	return samp_hist, cost_hist

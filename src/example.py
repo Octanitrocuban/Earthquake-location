@@ -11,7 +11,7 @@ import graph as gh
 from time import time
 from tqdm import tqdm
 #=============================================================================
-to_do = ['ensemble_descent']
+to_do = ['monte_carlo']
 
 # Create the stations
 fact = 1000
@@ -71,11 +71,11 @@ if 'single_descente' in to_do:
 			 'Y':np.random.uniform(-.5, .5)*fact,
 			 'Z':-500, 't':-0.5}
 
-	event_test, Cost_story, Hist = gd.descente_gradient(Stations, Supp,
+	event_test, hist, cost_story = gd.descente_gradient(Stations, Supp,
 													    100000, l_r_m=0.2,
 														patience=10000)
 
-	gh.plot_history_dict(Stations, event_test, Hist, Cost_story, Event, 100)
+	gh.plot_history_dict(Stations, event_test, hist, cost_story, Event, 100)
 	print('')
 
 #==================
@@ -92,11 +92,40 @@ if 'ensemble_descent' in to_do:
 	# to not adjust a parameter, set its learning rate to 0
 	lrm = np.array([1., 1., 0.1, 0.0001])
 	n_samp = 500
-	erreur, trained = gd.ensemble_descent(sta_a, n_samp, lrm, 10000, vp,
+	trained, erreur = gd.ensemble_descent(sta_a, n_samp, lrm, 10000, vp,
 										  limits, patience=1000)
 
 	gh.plot_history_vect_ed(sta_a, trained, erreur, Event_a, 500)
 	print('')
 
 
+#==================
+#==================
+# Method to use Monte Carlo sampling of the parameters space
+if 'monte_carlo' in to_do:
+	print('Monte Carlo')
+	length = int(8e6)
+	limits = np.array([[ -500, 500], [ -500, 500],
+					   [-1000,   0], [   -1,   0]])
+
+	samples, losses = gd.monte_carlo(length, limits, sta_a, 'random')
+	best = samples[np.argmin(losses)]
+	gh.plot_vect_stations(sta_a, Event_a, best[np.newaxis])
+	print('')
+
+
+#==================
+#==================
+# Method to use deepening grid search
+if 'deepen_grid' in to_do:
+	print('Deepening grid search')
+	n = 10
+	depth = 100
+	wid_f = 4.
+	limits = np.array([[ -500, 500], [ -500, 500],
+					   [-1000,   0], [   -1,   0]])
+
+	sample_story, cost_story = gd.deepening_grid_search(sta_a, n, limits, depth, wid_f)
+	gh.plot_history_vect(sta_a, s_his[-1], sample_story, cost_story, Event_a, 1)
+	print('')
 
