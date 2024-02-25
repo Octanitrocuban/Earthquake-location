@@ -232,7 +232,6 @@ def descente_gradient(stations, event_test, n_iteration, ran_x=1, ran_y=1,
 
 	return event_test, cost_story, history
 
-
 def ensemble_descent(stations, n_samples, learning_rates, n_it, v_propag,
 					 limits, patience=1000):
 	"""
@@ -315,3 +314,59 @@ def ensemble_descent(stations, n_samples, learning_rates, n_it, v_propag,
 	history = np.array(history)
 	print_sample_array(history[best[0], best[1]], before='Best event = ')
 	return loss, history
+
+def monte_carlo(n_samples, limites, stations, vp=4000, sampling='random'):
+	"""
+	Function to compute a Monte Carlo method.
+
+	Parameters
+	----------
+	n_samples : int
+		Number of samples.
+	limites : numpy.ndarray
+		A 2d array listing the limites of the search. The shape is (n, 2).
+		n is the number of features. The n-th line is: [lower, upper] bound.
+	stations : numpy.ndarray
+		Station locations and picked arrival time.
+	vp : float, optional
+		Assumed constant P-wave velocity. The default is 4000.
+	sampling : str, optional
+		Method to sampling the parameter space. If 'random', it will simply
+		draw n_samples random values for each parameters. If 'grid_rand', it
+		will first define a 4d grid with a total of cells <= n_samples. Then
+		it will move randomly these samples within their cell. The default is
+		'random'.
+
+	Returns
+	-------
+	samples : numpy.ndarray
+		Sample created and tested.
+	loss : numpy.ndarray
+		Root mean square error of the sample tested.
+
+	"""
+	if sampling == 'random':
+		samples = np.random.uniform(0, 1, (n_samples, 4))
+		samples = samples*(limites[:, 1]-limites[:, 0])+limites[:, 0]
+
+	elif sampling == 'grid_rand':
+		sub_n = int(n_samples**(1/4))
+		differ = ((limites[:, 1]-limites[:, 0])/(n_samples-1))/2
+		samples = np.meshgrid(np.linspace(limites[0, 0], limites[0, 1], sub_n),
+							  np.linspace(limites[1, 0], limites[1, 1], sub_n),
+							  np.linspace(limites[2, 0], limites[2, 1], sub_n),
+							  np.linspace(limites[3, 0], limites[3, 1], sub_n))
+
+		samples = np.array([np.ravel(samples[0]), np.ravel(samples[1]),
+							np.ravel(samples[2]), np.ravel(samples[3])]).T
+
+		noise = np.random.uniform(-1, 1, samples.shape)*differ[np.newaxis]
+		samples = samples+noise
+
+	dist = cdist(stations[:, :3], samples[:, :3]).T
+	tp_est = samples[:, 3:4] + dist / vp
+	loss = np.sum((tp_est - stations[:, 3])**2, axis=1)**.5 /len(stations)
+	print("Best misfit = "+str(np.min(loss)))
+	best = samples[np.argmin(loss)]
+	print_sample_array(best, before='Best event = ')
+	return samples, loss
