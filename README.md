@@ -101,3 +101,7 @@ Implementation of the ensemble descente method and associated plot functions.
 
 #### 1.2
 Implementation of the Monte Carlo method.
+
+#### 1.3
+Implementation of the deepening grid search method.
+
