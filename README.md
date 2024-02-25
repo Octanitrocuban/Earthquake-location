@@ -8,6 +8,7 @@ This repository contain different method to locate earthquake in a higly simplif
   - calc_misfit: function to calculate misfit between observed and calculated arrival times.
   - descente_gradient: function to make a gradient descent from a given test event and data from stations.
   - ensemble_descent: function to make a gradient descent with many samples in a vectorised method.
+  - monte_carlo: function to compute a Monte Carlo method.
 
 **graph.py**: this module contain functions to plot the state of the search and the history of the localisation of the earthquake.
   - plot_dict_stations: function to plot the position of the station, the true event and of the tested earthquake(s) model(s) if given.
@@ -22,7 +23,7 @@ This repository contain different method to locate earthquake in a higly simplif
 
 **example.py**: this script contain exemples on how to use the functions from gradient_descent.py and graph.py.
 
-## The single descente method:
+## Single descente method:
 The computation time for one use is ~ 1.7 second.
 
 ### Plots:
@@ -45,14 +46,14 @@ The following plots shows the history of the loss of a model, the history of the
 ![Exemple picture](img/map_hist_single_descente.png)
 
 
-## The ensemble descente method:
-The computation time for one use higly depends on thenumber of samples. For 5 000 samples and 23 001 epochs it took ~ 49.6. second.
+## Ensemble descente method:
+The computation time for one use higly depends on the number of samples. For 5 000 samples and 23 001 epochs it took ~ 49.6. seconds.
 
 ### Explanations
 The ensemble descente method is a vectorised inmplementation of multiple single descente. It will train multiple earthquake models independently but at the same time. The goal is to reduce the influance of random parameter initialization.
 
 ### Plots
-The first plot is the Root MeanSquare Error distribution of the 5 000 samples after their training. We can see that they are 0.00024 and seems to have a distribution close to the single method RMSE. The shape of the distribution is not the same because the method is sligthly different. In the single, each parameter are adjust one after the other whereas they are adjust all together in the ensemble method. Further more, in the single method, a parameter could be unchage wich is not a possible case in the ensemble method. It may be interesting to ad a kernel feature in the future for the ensemble method.
+The first plot is the Root MeanSquare Error distribution of the 5 000 samples after their training. We can see that they are all lower than 0.00024 and seems to have a distribution close to the single method RMSE. The shape of the distribution is not the same because the training method is sligthly different. In the single, each parameter are adjust one after the other whereas they are adjust all together in the ensemble method. Further more, in the single method, a parameter could be unchage wich is not a possible case in the ensemble method. It may be interesting to add an other kernel feature in the future for the ensemble method.
 
 The second plot shows the distance between the samples and the true targeted event. As for the single method we can see that the distances are quite low, but they aren't as good either. The closet model is still at ~ 8.94 meter of the target. The average distance is also higher. Even if the results are less good, this method is intersting because it train many samples in a lower amount of time which give more robust statistical resluts faster.
 
@@ -71,6 +72,25 @@ The first, second and third plots shows the history of the losses, the time pred
 ![Exemple picture](img/map_hist_dense_ed.png)
 
 
+## Monte Carlo method:
+Time computing for $8*10^6$ samples is ~1.1 second.
+
+### Explanations
+For the implementation of Monte Carlo method, I choose to add two possible sampling method.
+The first one is to simply draw n random values for each parameters from an uniform law. This will give us n samples. It is a very fast method, but there need to be enougth samples draw, otherwise part of the parameter space will not be explored.
+The second method of sampling will first define a 4d grid with a total of cells equal to the integer of the fourth root of the asked number samples n. Then it will move randomly these samples within their cell following an uniform law. This method gives better sampling of parameters, but is also slower.
+
+### Plots
+The first picture show the position of the sations on X and Y axis with the targeted event and the best earthquake model. The second plot is the distribution of the error of the samples.The third plot is the distribution of the distances between the samples and the targeted event.
+
+![Exemple picture](img/map_of_stations_vect_MC_8M_random.png)
+
+![Exemple picture](img/rmse_MC_8M_random.png)
+
+![Exemple picture](img/dist_MC_8M_random.png)
+
+
+
 # Versions:
 
 ### 1.0
@@ -78,3 +98,6 @@ Implementation of the single descente method and associated plot functions.
 
 #### 1.1
 Implementation of the ensemble descente method and associated plot functions.
+
+#### 1.2
+Implementation of the Monte Carlo method.
