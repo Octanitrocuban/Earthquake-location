@@ -73,7 +73,7 @@ The first, second and third plots shows the history of the losses, the time pred
 
 
 ## Monte Carlo method:
-Time computing for $8*10^6$ samples is ~1.1 second.
+Time computing for \math{8*10^6} samples is ~1.1 second.
 
 ### Explanations
 For the implementation of Monte Carlo method, I choose to add two possible sampling method.
@@ -89,11 +89,30 @@ The first picture show the position of the sations on X and Y axis with the targ
 
 ![Exemple picture](img/dist_MC_8M_random.png)
 
+## Deepening grid search method:
+Time computing for a cut frequency of 10 and 50 epochs is less than 0.1 second.
+
+### Explanations
+This method works by deffining a regular grid which split the parameters space into n cells. The total number of cell is equal to n^(number of parameter). It compute the root mean square error of the nodes, then take the one with the lower error as the current node. It compute a new grid of nodes around the current node with the same number a celle, but with smaller bounds (we are zooming in). And then again compute the rmse, choose the node with lowest error, define it as current node, ect...
+
+The main idea of this method is to zoom iteratively into the space of the parameters to find the solution. Consequently, if the number of cell is too low, the training can go in the wrong direction and get lost. There are (at least) three major improvement possibles. The first one is to keep the nodes and their loss from the i-1 iteration, and make the model enable to also serche at the second lowest error. This could help the model if it goes in the wonrg direction (i.e. a local minima). The second is increase or decrease the number of cells through the iteration. The last possibility would be to make random sampling from the cells and the averaging the results to make it more robust to local minima.
+
+### Plots
+
+
+![Exemple picture](img/loss_hist_deepen_grid.png)
+
+![Exemple picture](img/time_hist_deepen_grid.png)
+
+![Exemple picture](img/depth_hist_deepen_grid.png)
+
+![Exemple picture](img/map_hist_deepen_grid.png)
+
 
 
 # Versions:
 
-### 1.0
+#### 1.0
 Implementation of the single descente method and associated plot functions.
 
 #### 1.1
