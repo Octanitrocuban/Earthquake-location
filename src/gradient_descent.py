@@ -216,12 +216,13 @@ def gradient_descent(stations, event_test, n_iteration, ran_x=1, ran_y=1,
 					 event_test['t']])
 
 		if i > p3p:
-			if (patience%i) == 0:
+			if (i%patience) == 0:
 				# In cases where the convergence threshold is reached before
 				# the n-th iterations are made, if the slope is sufficiently
 				# low then we break the loop.
-				if (np.mean(cost_story[-p2p:-patience])-
-								np.mean(cost_story[-patience:])==0):
+				if (np.min(cost_story[-p2p:-patience]) <= 
+					np.min(cost_story[-patience:])):
+
 					break
 
 	cost_story = np.array(cost_story)
@@ -334,8 +335,8 @@ def monte_carlo(n_samples, limites, stations, vp=4000, sampling='random'):
 		Method to sampling the parameter space. If 'random', it will simply
 		draw n_samples random values for each parameters. If 'grid_rand', it
 		will first define a 4d grid with a total of cells <= n_samples. Then
-		it will move randomly these samples within their cell. The default is
-		'random'.
+		it will move randomly these samples within their cell. It can be
+		['random', 'grid_rand']. The default is'random'.
 
 	Returns
 	-------
