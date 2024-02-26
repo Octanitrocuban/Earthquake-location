@@ -74,7 +74,7 @@ The first, second and third plots shows the history of the losses, the time pred
 
 
 ## Monte Carlo method:
-Time computing for \math{8*10^6} samples is ~1.1 second.
+Time computing for \math{$8*10^6$} samples is ~1.1 second.
 
 ### Explanations
 For the implementation of Monte Carlo method, I choose to add two possible sampling method.
