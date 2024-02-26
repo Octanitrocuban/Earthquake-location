@@ -65,8 +65,8 @@ def plot_dict_stations(stations, event=None, samples=None, save_path=None):
 			c += 1
 
 	plt.legend()
-	plt.xlabel('X (in metres)', fontsize=15)
-	plt.ylabel('Y (in metres)', fontsize=15)
+	plt.xlabel('X (in meters)', fontsize=15)
+	plt.ylabel('Y (in meters)', fontsize=15)
 	plt.axis('equal')
 	if type(save_path) == str:
 		plt.savefig(save_path+'map_of_stations_dict.png',
@@ -112,12 +112,12 @@ def plot_vect_stations(stations, event=None, samples=None, save_path=None):
 		plt.text(event[0]+5, event[1]+10, 'E', ha='center')
 
 	if type(samples) == np.ndarray:
-		plt.plot(samples[:, 0], samples[:, 1], 'gv', label='best sample(s)',
+		plt.plot(samples[:, 0], samples[:, 1], 'gv', label='Best sample(s)',
 				 zorder=2)
 
 	plt.legend()
-	plt.xlabel('X (in metres)', fontsize=15)
-	plt.ylabel('Y (in metres)', fontsize=15)
+	plt.xlabel('X (in meters)', fontsize=15)
+	plt.ylabel('Y (in meters)', fontsize=15)
 	plt.axis('equal')
 	if type(save_path) == str:
 		plt.savefig(save_path+'map_of_stations_vect.png',
@@ -166,8 +166,8 @@ def plot_history_dict(stations, test, history, loss, true_event=None,
 	plt.plot([x_axis[-1], len(loss)], [loss[x_axis[-1]], loss[-1]],
 			 color='steelblue')
 
-	plt.xlabel('iterations', fontsize=11)
-	plt.ylabel('rmse', fontsize=11)
+	plt.xlabel('Iterations', fontsize=11)
+	plt.ylabel('Root Mean Square Error', fontsize=11)
 	if type(save_path) == str:
 		plt.savefig(save_path+'loss_hist_dict.png', bbox_inches='tight')
 
@@ -175,13 +175,13 @@ def plot_history_dict(stations, test, history, loss, true_event=None,
 
 	# Time before the earthquake was recorded by the reference station (in s)
 	plt.figure()
-	plt.title('time variations', fontsize=12)
+	plt.title('Time variations', fontsize=12)
 	plt.plot(x_axis, history[::samp_rate, 3], color='steelblue')
 	plt.plot([x_axis[-1], len(loss)],
 			 [history[x_axis[-1], 3], history[-1, 3]], color='steelblue')
 
-	plt.xlabel('iterations', fontsize=11)
-	plt.ylabel('time (s)', fontsize=11)
+	plt.xlabel('Iterations', fontsize=11)
+	plt.ylabel('Time (s)', fontsize=11)
 	if type(save_path) == str:
 		plt.savefig(save_path+'time_hist_dict.png', bbox_inches='tight')
 
@@ -189,13 +189,13 @@ def plot_history_dict(stations, test, history, loss, true_event=None,
 
 	# Depth in relation to the reference station (in m)
 	plt.figure()
-	plt.title('z variations', fontsize=12)
+	plt.title('Z variations', fontsize=12)
 	plt.plot(x_axis, history[::samp_rate, 2], color='steelblue')
 	plt.plot([x_axis[-1], len(loss)],
 			 [history[x_axis[-1], 2], history[-1, 2]], color='steelblue')
 
-	plt.xlabel('iterations', fontsize=11)
-	plt.ylabel('meters', fontsize=11)
+	plt.xlabel('Iterations', fontsize=11)
+	plt.ylabel('Meters', fontsize=11)
 	if type(save_path) == str:
 		plt.savefig(save_path+'depth_hist_dict.png', bbox_inches='tight')
 
@@ -231,8 +231,8 @@ def plot_history_dict(stations, test, history, loss, true_event=None,
 	plt.text(test['X'], test['Y']+20, 'U', zorder=3, ha='center')
 
 	plt.legend()
-	plt.xlabel('X (in metres)', fontsize=15)
-	plt.ylabel('Y (in metres)', fontsize=15)
+	plt.xlabel('X (in meters)', fontsize=15)
+	plt.ylabel('Y (in meters)', fontsize=15)
 	plt.axis('equal')
 	if type(save_path) == str:
 		plt.savefig(save_path+'map_hist_dict.png', bbox_inches='tight')
@@ -280,8 +280,8 @@ def plot_history_vect(stations, test, history, loss, true_event=None,
 	plt.plot([x_axis[-1], len(loss)], [loss[x_axis[-1]], loss[-1]],
 			 color='steelblue')
 
-	plt.xlabel('iterations', fontsize=11)
-	plt.ylabel('rmse', fontsize=11)
+	plt.xlabel('Iterations', fontsize=11)
+	plt.ylabel('Root Mean Square Error', fontsize=11)
 	if type(save_path) == str:
 		plt.savefig(save_path+'loss_hist_vect.png', bbox_inches='tight')
 
@@ -289,13 +289,13 @@ def plot_history_vect(stations, test, history, loss, true_event=None,
 
 	# Time before the earthquake was recorded by the reference station (in s).
 	plt.figure()
-	plt.title('time variations', fontsize=12)
+	plt.title('Time variations', fontsize=12)
 	plt.plot(x_axis, history[::samp_rate, 3], color='steelblue')
 	plt.plot([x_axis[-1], len(loss)],
 			 [history[x_axis[-1], 3], history[-1, 3]], color='steelblue')
 
-	plt.xlabel('iterations', fontsize=11)
-	plt.ylabel('time (s)', fontsize=11)
+	plt.xlabel('Iterations', fontsize=11)
+	plt.ylabel('Time (s)', fontsize=11)
 	if type(save_path) == str:
 		plt.savefig(save_path+'time_hist_vect.png', bbox_inches='tight')
 
@@ -303,13 +303,13 @@ def plot_history_vect(stations, test, history, loss, true_event=None,
 
 	# Depth in relation to the reference station (in m)
 	plt.figure()
-	plt.title('z variations', fontsize=12)
+	plt.title('Z variations', fontsize=12)
 	plt.plot(x_axis, history[::samp_rate, 2], color='steelblue')
 	plt.plot([x_axis[-1], len(loss)],
 			 [history[x_axis[-1], 2], history[-1, 2]], color='steelblue')
 
-	plt.xlabel('iterations', fontsize=11)
-	plt.ylabel('meters', fontsize=11)
+	plt.xlabel('Iterations', fontsize=11)
+	plt.ylabel('Meters', fontsize=11)
 	if type(save_path) == str:
 		plt.savefig(save_path+'depth_hist_vect.png', bbox_inches='tight')
 
@@ -336,8 +336,8 @@ def plot_history_vect(stations, test, history, loss, true_event=None,
 	plt.text(test[0], test[1]+20, 'U', zorder=3, ha='center')
 
 	plt.legend()
-	plt.xlabel('X (in metres)', fontsize=15)
-	plt.ylabel('Y (in metres)', fontsize=15)
+	plt.xlabel('X (in meters)', fontsize=15)
+	plt.ylabel('Y (in meters)', fontsize=15)
 	plt.axis('equal')
 	if type(save_path) == str:
 		plt.savefig(save_path+'map_hist_vect.png', bbox_inches='tight')
@@ -347,7 +347,7 @@ def plot_history_vect(stations, test, history, loss, true_event=None,
 def plot_history_vect_ed(stations, history, loss, true_event=None,
 						 samp_rate=60, save_path=None):
 	"""
-	Function to plot the evolution of the variables for the ensemble descente
+	Function to plot the evolution of the variables for the ensemble descent
 	method.
 
 	Parameters
@@ -383,8 +383,8 @@ def plot_history_vect_ed(stations, history, loss, true_event=None,
 	plt.figure()
 	plt.title('Cost function (loss)', fontsize=12)
 	plt.plot(loss, 'b', lw=1)
-	plt.xlabel('iterations', fontsize=11)
-	plt.ylabel('rmse', fontsize=11)
+	plt.xlabel('Iterations', fontsize=11)
+	plt.ylabel('Root Mean Square Error', fontsize=11)
 	if type(save_path) == str:
 		plt.savefig(save_path+'loss_hist_ed.png', bbox_inches='tight')
 
@@ -392,10 +392,10 @@ def plot_history_vect_ed(stations, history, loss, true_event=None,
 
 	# Time before the earthquake was recorded by the reference station (in s)
 	plt.figure()
-	plt.title('time variations', fontsize=12)
+	plt.title('Time variations', fontsize=12)
 	plt.plot(history[:, :, 3], 'b', lw=1)
-	plt.xlabel('iterations', fontsize=11)
-	plt.ylabel('time (s)', fontsize=11)
+	plt.xlabel('Iterations', fontsize=11)
+	plt.ylabel('Time (s)', fontsize=11)
 	if type(save_path) == str:
 		plt.savefig(save_path+'time_hist_ed.png', bbox_inches='tight')
 
@@ -403,10 +403,10 @@ def plot_history_vect_ed(stations, history, loss, true_event=None,
 
 	# Depth in relation to the reference station (in m)
 	plt.figure()
-	plt.title('z variations', fontsize=12)
+	plt.title('Z variations', fontsize=12)
 	plt.plot(history[:, :, 2], 'b', lw=1)
-	plt.xlabel('iterations', fontsize=11)
-	plt.ylabel('meters', fontsize=11)
+	plt.xlabel('Iterations', fontsize=11)
+	plt.ylabel('Meters', fontsize=11)
 	if type(save_path) == str:
 		plt.savefig(save_path+'depth_hist_ed.png', bbox_inches='tight')
 
@@ -447,8 +447,8 @@ def plot_history_vect_ed(stations, history, loss, true_event=None,
 				 ha='center', zorder=3)
 
 	plt.legend()
-	plt.xlabel('X (in metres)', fontsize=15)
-	plt.ylabel('Y (in metres)', fontsize=15)
+	plt.xlabel('X (in meters)', fontsize=15)
+	plt.ylabel('Y (in meters)', fontsize=15)
 	plt.axis('equal')
 	if type(save_path) == str:
 		plt.savefig(save_path+'map_hist_ed.png', bbox_inches='tight')
@@ -500,7 +500,7 @@ def show_density_history_ed(stations, history, loss, true_event=None,
 							bins_evol=(60, 100), bins_map=(100, 100),
 							save_path=None):
 	"""
-	Function to show the evolution of the variables for the ensemble descente
+	Function to show the evolution of the variables for the ensemble descent
 	method through density plots.
 
 	Parameters
@@ -545,8 +545,8 @@ def show_density_history_ed(stations, history, loss, true_event=None,
 	plt.yticks(np.linspace(len(sc_loss), 0, 11),
 			   np.round(np.linspace(sc_loss[0], sc_loss[-1], 11), 6))
 
-	plt.xlabel('iterations', fontsize=11)
-	plt.ylabel('rmse', fontsize=11)
+	plt.xlabel('Iterations', fontsize=11)
+	plt.ylabel('Root Mean Square Error', fontsize=11)
 	plt.colorbar(shrink=0.4, label='Number of model per cell')
 	if type(save_path) == str:
 		plt.savefig(save_path+'loss_hist_pdf_ed.png', bbox_inches='tight')
@@ -556,7 +556,7 @@ def show_density_history_ed(stations, history, loss, true_event=None,
 	# Time before the earthquake was recorded by the reference station (in s)
 	pdf_time, sc_epoch, sc_time = custom_2d_hist(history[:, :, 3], bins_evol)
 	plt.figure(figsize=(12, 12))
-	plt.title('time variations', fontsize=12)
+	plt.title('Time variations', fontsize=12)
 	plt.grid(True)
 	plt.imshow(pdf_time[::-1], interpolation='none')
 	plt.xticks(np.linspace(0, len(sc_epoch), 11),
@@ -565,8 +565,8 @@ def show_density_history_ed(stations, history, loss, true_event=None,
 	plt.yticks(np.linspace(len(sc_loss), 0, 11),
 			   np.round(np.linspace(sc_time[0], sc_time[-1], 11), 6))
 
-	plt.xlabel('iterations', fontsize=11)
-	plt.ylabel('time (s)', fontsize=11)
+	plt.xlabel('Iterations', fontsize=11)
+	plt.ylabel('Time (s)', fontsize=11)
 	plt.colorbar(shrink=0.4, label='Number of model per cell')
 	if type(save_path) == str:
 		plt.savefig(save_path+'time_hist_pdf_ed.png', bbox_inches='tight')
@@ -576,7 +576,7 @@ def show_density_history_ed(stations, history, loss, true_event=None,
 	# Depth in relation to the reference station (in m)
 	pdf_depth, sc_epoch, sc_depth = custom_2d_hist(history[:, :, 2], bins_evol)
 	plt.figure(figsize=(12, 12))
-	plt.title('z variations', fontsize=12)
+	plt.title('Z variations', fontsize=12)
 	plt.grid(True)
 	plt.imshow(pdf_depth[::-1], interpolation='none')
 	plt.xticks(np.linspace(0, len(sc_epoch), 11),
@@ -585,8 +585,8 @@ def show_density_history_ed(stations, history, loss, true_event=None,
 	plt.yticks(np.linspace(len(sc_depth), 0, 11),
 			   np.round(np.linspace(sc_depth[0], sc_depth[-1], 11), 6))
 
-	plt.xlabel('iterations', fontsize=11)
-	plt.ylabel('meters', fontsize=11)
+	plt.xlabel('Iterations', fontsize=11)
+	plt.ylabel('Meters', fontsize=11)
 	plt.colorbar(shrink=0.4, label='Number of model per cell')
 	if type(save_path) == str:
 		plt.savefig(save_path+'depth_hist_pdf_ed.png', bbox_inches='tight')
@@ -614,8 +614,7 @@ def show_density_history_ed(stations, history, loss, true_event=None,
 			 np.max(stations[:, 1])+de[1]*0.07,)
 
 	plt.figure(figsize=(10, 10))
-	plt.title('Map of stations, epicenter and paths from gradient descent',
-			  fontsize=12)
+	plt.title('Map of stations and epicenters', fontsize=12)
 
 	plt.imshow(pdf_map, interpolation='none', extent=[np.min(stations[:, 0]),
 													  np.max(stations[:, 0]),
@@ -637,8 +636,8 @@ def show_density_history_ed(stations, history, loss, true_event=None,
 	plt.legend()
 	plt.xlim(xlims[0], xlims[1])
 	plt.ylim(ylims[0], ylims[1])
-	plt.xlabel('X (in metres)', fontsize=15)
-	plt.ylabel('Y (in metres)', fontsize=15)
+	plt.xlabel('X (in meters)', fontsize=15)
+	plt.ylabel('Y (in meters)', fontsize=15)
 	if type(save_path) == str:
 		plt.savefig(save_path+'map_hist_dense_ed.png', bbox_inches='tight')
 
@@ -669,8 +668,8 @@ def plot_diff_cost_evol(loss, save_path=None):
 	plt.title('Change in variation of rmse', fontsize=12)
 	plt.grid(True, zorder=2)
 	plt.plot(np.diff(loss), zorder=3)
-	plt.xlabel('iterations', fontsize=11)
-	plt.ylabel('delta rmse', fontsize=11)
+	plt.xlabel('Iterations', fontsize=11)
+	plt.ylabel('Delta Root Mean Square Error', fontsize=11)
 	if type(save_path) == str:
 		plt.savefig(save_path+'diff_cost_evol.png', bbox_inches='tight')
 
@@ -679,7 +678,7 @@ def plot_diff_cost_evol(loss, save_path=None):
 def plot_diff_cost_evol_ed(loss, save_path=None):
 	"""
 	Function to plot the change in variation of the rmse through the epochs for
-	the ensemble descente method.
+	the ensemble descent method.
 
 	Parameters
 	----------
@@ -703,8 +702,8 @@ def plot_diff_cost_evol_ed(loss, save_path=None):
 		plt.title('Change in variation of rmse', fontsize=12)
 		plt.grid(True, zorder=2)
 		plt.plot(np.diff(loss), zorder=3)
-		plt.xlabel('iterations', fontsize=11)
-		plt.ylabel('delta rmse', fontsize=11)
+		plt.xlabel('Iterations', fontsize=11)
+		plt.ylabel('Delta Root Mean Square Error', fontsize=11)
 		if type(save_path) == str:
 			plt.savefig(save_path+'diff_cost_evol_'+str(i)+'.png', bbox_inches='tight')
 

@@ -64,16 +64,16 @@ print('True values:', Event, '\n')
 #==================
 #==================
 # Method using a random starting set of parameters to make a gradient descent
-if 'single_descente' in to_do:
-	print('Descente from one samples')
+if 'single_descent' in to_do:
+	print('Descent from one samples')
 
 	Supp  = {'X':np.random.uniform(-.5, .5)*fact,
 			 'Y':np.random.uniform(-.5, .5)*fact,
 			 'Z':-500, 't':-0.5}
 
-	event_test, hist, cost_story = gd.descente_gradient(Stations, Supp,
-													    100000, l_r_m=0.2,
-														patience=10000)
+	event_test, hist, cost_story = gd.gradient_descent(Stations, Supp,
+													   100000, l_r_m=0.2,
+													   patience=10000)
 
 	gh.plot_history_dict(Stations, event_test, hist, cost_story, Event, 100)
 	print('')
@@ -83,7 +83,7 @@ if 'single_descente' in to_do:
 # Method to use multiple random starting set of parameters to make a gradient
 # descent
 if 'ensemble_descent' in to_do:
-	print('Descente from multiple samples')
+	print('Descent from multiple samples')
 	limits = [[np.min(sta_a[:, 0]), np.max(sta_a[:, 0])],
 			  [np.min(sta_a[:, 1]), np.max(sta_a[:, 1])],
 			  [-1000., 0.],
