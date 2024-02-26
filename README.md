@@ -6,7 +6,7 @@ This repository contain different method to locate earthquake in a higly simplif
   - print_sample_array: function to plot samples array as dictionary.
   - centrering: function to normalise (centralise) stations and event if given.
   - calc_misfit: function to calculate misfit between observed and calculated arrival times.
-  - descent_gradient: function to make a gradient descent from a given test event and data from stations.
+  - gradient_descent: function to make a gradient descent from a given test event and data from stations.
   - ensemble_descent: function to make a gradient descent with many samples in a vectorised method.
   - monte_carlo: function to compute a Monte Carlo method.
   - deepening_grid_search: function to compute a deepening grid search method.
