@@ -116,7 +116,7 @@ def calc_misfit(stations, event, vp=4000):
 	misfit = m.sqrt(misfit_sum_sq) / len(stations)
 	return misfit
 
-def descente_gradient(stations, event_test, n_iteration, ran_x=1, ran_y=1,
+def gradient_descent(stations, event_test, n_iteration, ran_x=1, ran_y=1,
 					  ran_z=1, ran_t=0.0005, l_r_m=0.2, patience=1000,
 					  vp=4000):
 	"""
