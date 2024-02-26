@@ -6,7 +6,7 @@ This repository contain different method to locate earthquake in a higly simplif
   - print_sample_array: function to plot samples array as dictionary.
   - centrering: function to normalise (centralise) stations and event if given.
   - calc_misfit: function to calculate misfit between observed and calculated arrival times.
-  - descente_gradient: function to make a gradient descent from a given test event and data from stations.
+  - descent_gradient: function to make a gradient descent from a given test event and data from stations.
   - ensemble_descent: function to make a gradient descent with many samples in a vectorised method.
   - monte_carlo: function to compute a Monte Carlo method.
   - deepening_grid_search: function to compute a deepening grid search method.
@@ -16,19 +16,19 @@ This repository contain different method to locate earthquake in a higly simplif
   - plot_vect_stations: function to plot the position of the station, the true event and of the tested earthquake(s) model(s) if given.
   - plot_history_dict: function to plot the evolution of the variables.
   - plot_history_vect: function to plot the evolution of the variables.
-  - plot_history_vect_ed: function to plot the evolution of the variables for the ensemble descente method.
+  - plot_history_vect_ed: function to plot the evolution of the variables for the ensemble descent method.
   - custom_2d_hist: a custom function to compute 2d hitogram on the evolution of a population of models.
-  - show_density_history_ed: function to show the evolution of the variables for the ensemble descente method through density plots.
+  - show_density_history_ed: function to show the evolution of the variables for the ensemble descent method through density plots.
   - plot_diff_cost_evol: function to plot the change in variation of the rmse through the epochs.
-  - plot_diff_cost_evol_ed: function to plot the change in variation of the rmse through the epochs for the ensemble descente method.
+  - plot_diff_cost_evol_ed: function to plot the change in variation of the rmse through the epochs for the ensemble descent method.
 
 **example.py**: this script contain exemples on how to use the functions from gradient_descent.py and graph.py.
 
-## Single descente method:
+## Single descent method:
 The computation time for one use is ~ 1.7 second.
 
 ### Plots:
-Here are examples and statistics of descente_gradient function: I have made the function runs from 5 000 random initialization for a same earthquake. As we can see on the first plot, all models reach a small value of RMSE. But if we look at the second plot we can see that some run actually gets lost with a distance between the model and the true hypocenter larger than 800 meters. This comes from the fact that all stations have an altitude equal to zero. Consequently, for the algorithm the altitude can be positive or negative without effect on the loss. It also highlights the importance of the initialisation with some that can lead to absurd results. Still, even with these limitations, the third plot shows that the convergence is actually mostly a success with a distance between the model and the prediction lower than 15 meters.
+Here are examples and statistics of descent_gradient function: I have made the function runs from 5 000 random initialization for a same earthquake. As we can see on the first plot, all models reach a small value of RMSE. But if we look at the second plot we can see that some run actually gets lost with a distance between the model and the true hypocenter larger than 800 meters. This comes from the fact that all stations have an altitude equal to zero. Consequently, for the algorithm the altitude can be positive or negative without effect on the loss. It also highlights the importance of the initialisation with some that can lead to absurd results. Still, even with these limitations, the third plot shows that the convergence is actually mostly a success with a distance between the model and the prediction lower than 15 meters.
 
 ![Exemple picture](img/rmse_5000single.png)
 
@@ -38,20 +38,20 @@ Here are examples and statistics of descente_gradient function: I have made the 
 
 The following plots shows the history of the loss of a model, the history of the time predicted by the model, the history of the depth predicted by the model and the history of x and y prediction on a map with the position of the stations and of the event.
 
-![Exemple picture](img/loss_hist_single_descente.png)
+![Exemple picture](img/loss_hist_single_descent.png)
 
-![Exemple picture](img/time_hist_single_descente.png)
+![Exemple picture](img/time_hist_single_descent.png)
 
-![Exemple picture](img/depth_hist_single_descente.png)
+![Exemple picture](img/depth_hist_single_descent.png)
 
-![Exemple picture](img/map_hist_single_descente.png)
+![Exemple picture](img/map_hist_single_descent.png)
 
 
-## Ensemble descente method:
+## Ensemble descent method:
 The computation time for one use higly depends on the number of samples. For 5 000 samples and 23 001 epochs it took ~ 49.6. seconds.
 
 ### Explanations
-The ensemble descente method is a vectorised inmplementation of multiple single descente. It will train multiple earthquake models independently but at the same time. The goal is to reduce the influance of random parameter initialization.
+The ensemble descent method is a vectorised inmplementation of multiple single descent. It will train multiple earthquake models independently but at the same time. The goal is to reduce the influance of random parameter initialization.
 
 ### Plots
 The first plot is the Root MeanSquare Error distribution of the 5 000 samples after their training. We can see that they are all lower than 0.00024 and seems to have a distribution close to the single method RMSE. The shape of the distribution is not the same because the training method is sligthly different. In the single, each parameter are adjust one after the other whereas they are adjust all together in the ensemble method. Further more, in the single method, a parameter could be unchage wich is not a possible case in the ensemble method. It may be interesting to add an other kernel feature in the future for the ensemble method.
@@ -114,10 +114,10 @@ The first plot shows the evolution of the loss through iterations. We can see it
 # Versions:
 
 #### 1.0
-Implementation of the single descente method and associated plot functions.
+Implementation of the single descent method and associated plot functions.
 
 #### 1.1
-Implementation of the ensemble descente method and associated plot functions.
+Implementation of the ensemble descent method and associated plot functions.
 
 #### 1.2
 Implementation of the Monte Carlo method.
