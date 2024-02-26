@@ -58,9 +58,9 @@ The first plot is the Root MeanSquare Error distribution of the 5 000 samples af
 
 The second plot shows the distance between the samples and the true targeted event. As for the single method we can see that the distances are quite low, but they aren't as good either. The closet model is still at ~ 8.94 meter of the target. The average distance is also higher. Even if the results are less good, this method is intersting because it train many samples in a lower amount of time which give more robust statistical resluts faster.
 
-![Exemple picture](img/rmse_5000ensemble.png)
+![Exemple picture](img/rmse_5000_ensemble.png)
 
-![Exemple picture](img/dist_5000ensemble.png)
+![Exemple picture](img/dist_5000_ensemble.png)
 
 The first, second and third plots shows the history of the losses, the time predicted, and the depth predicted by the models while trainig respectivly. The fourth plot show the distribution of x and y model's predictions on a map with the position of the stations and of the event.
 
