@@ -35,9 +35,8 @@ Here are examples and statistics of descent_gradient function: I have made the f
 
 ![Exemple picture](img/rmse_5000single.png)
 
-![Exemple picture](img/dist_1_5000single.png)
+![Exemple picture](img/dist_5000single.png)
 
-![Exemple picture](img/dist_2_5000single.png)
 
 The following plots shows the history of the loss of a model, the history of the time predicted by the model, the history of the depth predicted by the model and the history of x and y prediction on a map with the position of the stations and of the event.
 
