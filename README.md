@@ -28,7 +28,7 @@ This repository contain different method to locate earthquake in a higly simplif
 The computation time for one use is less than 0.5 second.
 
 ### Explanations:
-For this method, it first create a random earthquake model, with (x, y and z) position and the time difference between its emission time and receving time at the reference station.
+For this method, it first create a random earthquake model, with (x, y and z) position and the time difference between its emission time and receving time at the reference station. It compute the root mean square error (rmse) between the predicted arrival time and the observed arrival time at the stations. It then test each parameters to see if by modifing it by a $\delta$ value it decrease the rmse and if it is the case, keep the modification.
 
 ### Plots:
 Here are examples and statistics of descent_gradient function: I have made the function runs from 5 000 random initialization (minimum to maximum x and y stations position's, z=-500, and t=-0.5) for a same earthquake. As we can see on the first plot, all models reach a small value of RMSE. The third plot shows that the convergence is mostly a success with a distance between the model and the prediction lower than 15 meters.
