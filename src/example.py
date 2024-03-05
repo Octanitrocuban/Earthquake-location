@@ -7,11 +7,11 @@ gradient_descent.py and graph.py.
 import numpy as np
 import matplotlib.pyplot as plt
 import gradient_descent as gd
+import genetic_alg as ga
 import graph as gh
 from time import time
-from tqdm import tqdm
 #=============================================================================
-to_do = ['monte_carlo']
+to_do = ['genetic_alg']
 
 # Create the stations
 fact = 1000
@@ -71,8 +71,9 @@ if 'single_descent' in to_do:
 			 'Y':np.random.uniform(-.5, .5)*fact,
 			 'Z':-500, 't':-0.5}
 
+	num_epoch = 100000
 	event_test, hist, cost_story = gd.gradient_descent(Stations, Supp,
-													   100000, l_r_m=0.2,
+													   num_epoch, l_r_m=0.2,
 													   patience=10000)
 
 	gh.plot_history_dict(Stations, event_test, hist, cost_story, Event, 100)
@@ -92,10 +93,13 @@ if 'ensemble_descent' in to_do:
 	# to not adjust a parameter, set its learning rate to 0
 	lrm = np.array([1., 1., 0.1, 0.0001])
 	n_samp = 500
-	trained, erreur = gd.ensemble_descent(sta_a, n_samp, lrm, 10000, vp,
+	num_epoch = 10000
+	trained, erreur = gd.ensemble_descent(sta_a, n_samp, lrm, num_epoch, vp,
 										  limits, patience=1000)
 
-	gh.plot_history_vect_ed(sta_a, trained, erreur, Event_a, 500)
+	gh.show_density_history_ed(sta_a, trained, erreur, Event_a, (100, 500),
+								(100, 100))
+
 	print('')
 
 
@@ -125,7 +129,39 @@ if 'deepen_grid' in to_do:
 	limits = np.array([[ -500, 500], [ -500, 500],
 					   [-1000,   0], [   -1,   0]])
 
-	sample_story, cost_story = gd.deepening_grid_search(sta_a, n, limits, depth, wid_f)
-	gh.plot_history_vect(sta_a, s_his[-1], sample_story, cost_story, Event_a, 1)
+	sample_story, cost_story = gd.deepening_grid_search(sta_a, n, limits,
+														depth, wid_f)
+
+	gh.plot_history_vect(sta_a, sample_story[-1], sample_story, cost_story,
+						 Event_a, 1)
+
 	print('')
 
+
+#==================
+#==================
+# Method to use genetic algorithm
+if 'genetic_alg' in to_do:
+	print('Genetic algorithm')
+	pop_length = 10000
+	num_epoch = 100000
+	noise_type = 'uniform'
+	trehold = 1e-6
+	alpha = 0.20
+	repart = [int(pop_length*alpha),
+			  int(pop_length*alpha/2),
+			  int(pop_length-3*pop_length*alpha)]
+
+	limits_u = np.array([[-500, 500], [-500, 500], [-1000, 0], [-1., 0.]])
+	combi = np.array([[0, 0, 1, 1], [0, 1, 0, 1], [1, 0, 0, 1],
+					  [0, 1, 1, 0], [1, 0, 1, 0], [1, 1, 0, 0]])
+
+	sample_story, cost_story = ga.evolution(pop_length, num_epoch,
+											noise_type, limits_u, sta_a,
+											repart, combi, rate, trehold,
+											patience=10)
+
+	gh.plot_history_vect(sta_a, sample_story[-1], sample_story, cost_story,
+						 Event_a, 1)
+
+	print('')
