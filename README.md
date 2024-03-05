@@ -1,7 +1,7 @@
 # Earthquake-location
 This repository contain different method to locate earthquake in a higly simplified environment. 
 
-### There are 3 scripts:
+### There are 4 scripts:
 **gradient_descent.py**: this module contains function to compute gradient descent through exploration algorithms.
   - print_sample_array: function to plot samples array as dictionary.
   - centrering: function to normalise (centralise) stations and event if given.
@@ -10,6 +10,16 @@ This repository contain different method to locate earthquake in a higly simplif
   - ensemble_descent: function to make a gradient descent with many samples in a vectorised method.
   - monte_carlo: function to compute a Monte Carlo method.
   - deepening_grid_search: function to compute a deepening grid search method.
+
+**genetic_alg.py**: this module contain functions to compute gradient descent to localise the earthquake through a genetic algorithm.
+  - print_sample_array: function to plot samples array as dictionary.
+  - rmse: calculate misfit between observed and calculated arrival times using numpy ndarrays.
+  - randoms: function to create random samples with a given type of pdf and parameters.
+  - selections: function to make selectionof the bests samples for givens scores, samples and the number to be kept.
+  - means: function to radomly create couple of samples and retrun their average value.
+  - cross: function to radomly create couple of samples and retrun their random mix values.
+  - mutants: function to create mutants samples from the survivor samples.
+  - evolution: function to search a sample with the better parameters possible through genetic algorithm.
 
 **graph.py**: this module contain functions to plot the state of the search and the history of the localisation of the earthquake.
   - plot_dict_stations: function to plot the position of the station, the true event and of the tested earthquake(s) model(s) if given.
