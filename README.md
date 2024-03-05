@@ -122,6 +122,29 @@ The first plot shows the evolution of the loss through iterations. We can see it
 ![Exemple picture](img/map_hist_deepen_grid.png)
 
 
+## Genetic algorithm method:
+Time computing with the parameter given in the example script to reach value of rmse lower than 1e-6 is less than 0.1 second.
+
+### Explanations:
+
+
+### Plots:
+
+
+![Exemple picture](img/rmse_5000_gen_alg_randuniform.png)
+
+![Exemple picture](img/dist_5000_gen_alg_randuniform.png)
+
+
+
+![Exemple picture](img/loss_hist_gen_alg_randuniform.png)
+
+![Exemple picture](img/time_hist_gen_alg_randuniform.png)
+
+![Exemple picture](img/depth_hist_gen_alg_randuniform.png)
+
+![Exemple picture](img/map_hist_gen_alg_randuniform.png)
+
 
 # Versions:
 
