@@ -126,7 +126,9 @@ The first plot shows the evolution of the loss through iterations. We can see it
 Time computing with the parameter given in the example script to reach value of rmse lower than 1e-6 is less than 0.1 second.
 
 ### Explanations:
+This method works by simulating the evolution of a species under constant environmental selection pressures. The idea is to have the survival of the fittest which minimises the error.
 
+The first step is to create an initial random population. Here we are drawing random x, y, z and t position through a uniform distribution law. We calculate the root mean square error (rmse) for each sample of the population and keep only a percentage alpha of the best (lowest rmse). By doing this, we are simulating the death of the less well adapted individual. To create the new population we will create children of the survivors through different methods. The first one is to simply keep the survivors (survivors childs). The second is to randomly create couples of the survivors samples and to compute the average of their parameters (means childs). The third is to randomly create couples of the survivors samples and to shuffle their parameters (cross childs). The fourth method is to take the survivors samples and to add low level of noise to their parameter (mutants childs).
 
 ### Plots:
 
