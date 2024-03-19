@@ -148,6 +148,25 @@ The first step is to create an initial random population. Here we are drawing ra
 ![Exemple picture](img/map_hist_gen_alg_randuniform.png)
 
 
+## XGBoost method:
+
+
+### Explanations:
+
+
+### Plots:
+
+
+
+# References
+
+Tianqi, C., and Guestrin, C.. (2016) "XGBoost: A Scalable Tree Boosting System." Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, ACM. Crossref, https://doi.org/10.1145/2939672.2939785.
+
+Korlakai Vinayak, R., Gilad-Bachrach, R.. (2015). "DART: Dropouts meet Multiple Additive Regression Trees." Proceedings of the Eighteenth International Conference on Artificial Intelligence and Statistics, in Proceedings of Machine Learning Research 38:489-497. https://proceedings.mlr.press/v38/korlakaivinayak15.html.
+
+
+
+
 # Versions:
 
 #### 1.0
@@ -165,4 +184,6 @@ Implementation of the deepening grid search method.
 #### 2.0
 Implementation of genetic algorithm method.
 
+#### 3.0
+Implementation of XGBoost method.
 
