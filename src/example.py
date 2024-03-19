@@ -153,6 +153,7 @@ if 'genetic_alg' in to_do:
 			  int(pop_length-3*pop_length*alpha)]
 
 	limits_u = np.array([[-500, 500], [-500, 500], [-1000, 0], [-1., 0.]])
+	rate = np.array([1., 1., 0.5, 0.001])
 	combi = np.array([[0, 0, 1, 1], [0, 1, 0, 1], [1, 0, 0, 1],
 					  [0, 1, 1, 0], [1, 0, 1, 0], [1, 1, 0, 0]])
 
