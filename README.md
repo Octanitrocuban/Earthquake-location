@@ -128,10 +128,23 @@ Time computing with the parameter given in the example script to reach value of 
 ### Explanations:
 This method works by simulating the evolution of a species under constant environmental selection pressures. The idea is to have the survival of the fittest which minimises the error.
 
-The first step is to create an initial random population. Here we are drawing random x, y, z and t position through a uniform distribution law. We calculate the root mean square error (rmse) for each sample of the population and keep only a percentage alpha of the best (lowest rmse). By doing this, we are simulating the death of the less well adapted individual. To create the new population we will create children of the survivors through different methods. The first one is to simply keep the survivors (survivors childs). The second is to randomly create couples of the survivors samples and to compute the average of their parameters (means childs). The third is to randomly create couples of the survivors samples and to shuffle their parameters (cross childs). The fourth method is to take the survivors samples and to add low level of noise to their parameter (mutants childs).
+The first step is to create an initial random population. Here we are drawing random x, y, z and t position through a uniform distribution law. We calculate the root mean square error (rmse) for each sample of the population and keep only a percentage alpha of the best (lowest rmse). By doing this, we are simulating the death of the less well adapted individual. To create the new population we will create children of the survivors through different methods. The first one is to simply keep the survivors (survivors childs). The second is to randomly create couples of the survivors samples and to compute the average of their parameters (means childs). The third is to randomly create couples of the survivors samples and to shuffle their parameters (cross childs). The fourth method is to take the survivors samples and to add low level of noise to their parameter (mutants childs). Once all of the new samples are created, we can once again compute their error, select the best ones and produce the next "childs".
+
+The process is reapeted until we reach a treshold wich trigger early stoping or to the last iteration.
+
+This method is sensitive to hyperparameters initialization.
+In the following example I used the same hyperparameters as in ./src/example.py . Some of the most important are: the type of noise for the creation of random model, the parameter of the random distribution, the learning rate of the parameters and the survival rate. The size of the population is not to critical as long as it isn't too small (< 50 isn't enough). More model you will have, faster the convergence will be.
+The noise type to use for random models, is crucial because if you are drawing a normal law on a uniform distributed phenomena (and conversely) you will start more far away to the best parameters and consequently, the convergence will be longer (up to orders of magnitude). In my case, it was the uniform distribution that worked best.
+The parameters of the distribution law ar as critical as the type of distribution. If they are to small, the convergence will be way longer. The same goes if they are to high.
+As in nearly every gradient descent algorithm, the learning rate is crucial to be well choose. If it is too big, the model may not converge and it the same if ti is too small. Here each parameters have their own learning rate. The learning rate is in this case used as the standard dévaition of a centered normal law whose sampling gives the value of the mutation of the parameter. The new value will be $x_{new} = x_{past} + \mathcal{N}(0, \sigma) $ where $\sigma$ is the learning rate.
+
+
 
 ### Plots:
 
+We can see on the first plot the distribution of the root mean square error of 5 000 training execution to localise the same earthquake. We can see that all attempt lead to an error lower than the given treshold of $1*10^{-6}$.
+
+The second plot shows the distribution of the euclidean distance between the best model of each run and the true position of the earthquake. We can see that all of the model have a distance lower than one meter wich is fairly small.
 
 ![Exemple picture](img/rmse_5000_gen_alg_randuniform.png)
 
