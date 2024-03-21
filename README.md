@@ -154,15 +154,21 @@ As in nearly every gradient descent algorithm, the learning rate is crucial to b
 
 ### Plots:
 
-We can see on the first plot the distribution of the root mean square error of 5 000 training execution to localise the same earthquake. We can see that all attempt lead to an error lower than the given treshold of $1*10^{-6}$.
+We can see on the first plot the distribution of the root mean square error of 5 000 training execution to localise the same earthquake. We can see that all attempt lead to an error lower than the given treshold of $1*10^{-6}$. The triangle shape of the distribution comes from the use of a fixed treshold which will triger the early stoping when reached. Indeed the probability that a model make a big improvement at this lesvel of error is low since the search is random. This effect can also be seen in the second plot.
 
-The second plot shows the distribution of the euclidean distance between the best model of each run and the true position of the earthquake. We can see that all of the model have a distance lower than one meter wich is fairly small.
+The second plot shows the distribution of the euclidean distance between the best model of each run and the true position of the earthquake. We can see that all of the model have a distance lower than one meter wich is fairly small. As written before, the shape of the distribution (approxiamtively a lognormal) comes from the use of the treshold.
 
 ![Exemple picture](img/rmse_5000_gen_alg_randuniform.png)
 
 ![Exemple picture](img/dist_5000_gen_alg_randuniform.png)
 
+The first plot shows the evolution of the loss through the gradient descent. We can see that it only took fourteen epochs (including the random initialization step) to reach the treshold of $1*10^{-6}$. Note that the rmse of the first epoch (at index 0) is already low compared to many of the other method which usualy start with rmse closer to 0.3. An other thing we can say is that the steep of loss is constant for all of the epochs. This means that the loss would probably get even lower in a short amount of iteration.
 
+The second plot shows the evolution of the time between the birth of the earthquake and when it was detected by the reference station. We can see that as for the evolution of the loss and of the depth, the model converged very fast without falling (event temporarely) in a local minima. This means that this method with these hyperparameters is quite robust against local minima. Note that this may not be the case for every set of hyperparameters.
+
+The third plot shows the evolution of the predicted depth of the earthquake.
+
+The four plot shows the evolution of the predicted x and y position of the earthquake.
 
 ![Exemple picture](img/loss_hist_gen_alg_randuniform.png)
 
@@ -174,9 +180,13 @@ The second plot shows the distribution of the euclidean distance between the bes
 
 
 ## XGBoost method:
-
+Time computing for the prdiction of one (or many) earthquakes is very low, but as we will see, it does not given very great results.
 
 ### Explanations:
+XGBoost (eXtreme Gradient Boosting) was introduce by [Tianqi and Guestrin] in 2016 in their paper: "XGBoost: A Scalable Tree Boosting System".
+
+For this method, I used the xgboost librabry from Distributed (Deep) Machine Learning Community (DMLC) XGBoost [https://xgboost.readthedocs.io/en/latest/index.html].
+
 
 
 ### Plots:
