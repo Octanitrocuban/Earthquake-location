@@ -1,5 +1,5 @@
 '''
-Script to create synthetic data to train machine learning models.
+Script to create synthetic data to train and test machine learning models.
 '''
 import numpy as np
 from scipy.spatial.distance import cdist
@@ -87,8 +87,8 @@ def uppsample_box(centers, multiplicator, differences):
 
 def compute_timing(stations, samples, vp=4000, level=0.0001):
 	"""
-	Function to compute the
-	noise that will be add to the arrival time of the stations.
+	Function to compute the arrival time of the stations and the
+	noise that will be add to them.
 	
 
 	Parameters
@@ -152,7 +152,7 @@ def XY_normalization_X(X, maximums, nfeatures):
 
 def XY_normalization_y(y, limites):
 	"""
-	Function to 
+	Function to normalize the x, y and z position of the earthquakes.
 
 	Parameters
 	----------
