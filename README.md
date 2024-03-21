@@ -180,7 +180,7 @@ The four plot shows the evolution of the predicted x and y position of the earth
 
 
 ## XGBoost method:
-Time computing for the prdiction of one (or many) earthquakes is very low, but as we will see, it does not given very great results.
+Time computing for the prdiction of one (or many) earthquakes is very low, but as we will see, it does not give very great results.
 
 ### Explanations:
 XGBoost (eXtreme Gradient Boosting) was introduce by [Tianqi and Guestrin] in 2016 in their paper: "XGBoost: A Scalable Tree Boosting System".
