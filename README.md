@@ -32,7 +32,19 @@ This repository contain different method to locate earthquake in a higly simplif
   - plot_diff_cost_evol: function to plot the change in variation of the rmse through the epochs.
   - plot_diff_cost_evol_ed: function to plot the change in variation of the rmse through the epochs for the ensemble descent method.
 
-**example.py**: this script contain exemples on how to use the functions from gradient_descent.py and graph.py.
+**create_data.py**: this script is used to create data to train and test machine learning algorithms.
+ - compute_box: function to compute the center of the cells of a 3d box.
+ - noise_box: function to compute random new positions for each X i-th positions within given boundaries.
+ - uppsample_box: function to compute a random sampling of the cells of the box.
+ - compute_timing: function to compute the arrival time of the stations and the noise that will be add to them.
+ - XY_normalization_X: function to normalize the x and y position of the stations in the X matrix.
+ - XY_normalization_y: function to normalize the x, y and z position of the earthquakes.
+ - centering_X: function to transform the time between the stations and the earthquake to the relative arrival time.
+
+**example.py**: this script contain exemples on how to use the functions from gradient_descent.py, genetic_alg.py and graph.py.
+
+### Running:
+To run the scripts, you can execute them from IDE (such as PyCharm or Spyder) or use comand line : ```python script.py```.
 
 ## Single descent method:
 The computation time for one use is less than 0.5 second.
