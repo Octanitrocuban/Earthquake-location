@@ -1,7 +1,7 @@
 # Earthquake-location
 This repository contain different method to locate earthquake in a higly simplified environment. 
 
-### There are 4 scripts:
+### There are 5 scripts:
 **gradient_descent.py**: this module contains function to compute gradient descent through exploration algorithms.
   - print_sample_array: function to plot samples array as dictionary.
   - centrering: function to normalise (centralise) stations and event if given.
@@ -183,13 +183,24 @@ The four plot shows the evolution of the predicted x and y position of the earth
 Time computing for the prdiction of one (or many) earthquakes is very low, but as we will see, it does not give very great results.
 
 ### Explanations:
-XGBoost (eXtreme Gradient Boosting) was introduce by [Tianqi and Guestrin] in 2016 in their paper: "XGBoost: A Scalable Tree Boosting System".
+XGBoost (eXtreme Gradient Boosting) was introduced by [Tianqi and Guestrin] in 2016 in their paper: "XGBoost: A Scalable Tree Boosting System".
 
 For this method, I used the xgboost librabry from Distributed (Deep) Machine Learning Community (DMLC) XGBoost [https://xgboost.readthedocs.io/en/latest/index.html].
+For the booster type, I used `dart` intorduced by Korlakai Vinayak and Gilad-Bachrach.
 
+I first created train, valid and test data with `create_data.py` script. I used 20 cut per space dimensions (resulting in $20^{3}$ cells of 50 meters width), witch I have randomly splited between the train, valid and test set with 70%, 15% and 15% respectively. Then for each cell I sample it by creating 10 random earthques located in them. After that it compute the time travel for all of the stations and add noise proportionally to this time travelling. Finally it compute the relative arrival time with the stations number 4 (index 3) compared to the other. The fourth station beeing the closet to the center of the network. In the end I had 56 000 samples in train, 12 000 in valid and 12 000 in test.
 
+The data to predict will be the x, y and z position of the earthquakes. The input data will be the relative arrival time and if asked for the position of the stations.
 
 ### Plots:
+
+![Exemple picture](img/distance_train_xgb_raw.png)
+
+![Exemple picture](img/distance_valid_xgb_raw.png)
+
+![Exemple picture](img/distance_test_xgb_raw.png)
+
+### SHAP values:
 
 
 
