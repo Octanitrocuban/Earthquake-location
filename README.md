@@ -44,6 +44,8 @@ This repository contain different method to locate earthquake in a higly simplif
 **example.py**: this script contain exemples on how to use the functions from gradient_descent.py, genetic_alg.py and graph.py.
 
 **xgboost_localisator.py**: this script is made to create, train, test and save a xgboost tree model.
+ - hist_dist: function to compute, show and save the figure of the distribution of the distance between the predicted and the true position of the earthquakes.
+
 
 ### Running:
 To run the scripts, you can execute them from IDE (such as PyCharm or Spyder) or use comand line : ```python script.py```.
@@ -202,9 +204,14 @@ The data to predict will be the x, y and z position of the earthquakes. The inpu
 
 ![Exemple picture](img/distance_test_xgb_raw.png)
 
-### SHAP values:
+The file ./img/3d_positions_dist_error_test_raw.html is a three dimensional plot of the positions predicted by a trained model. The train was done on raw train
+data with the position of the stations. The colorbar shows the distance between the predition and the true position. The data used for this plot is the test set.
 
+### Feature importances:
 
+In the following plot, the `X` is for the relative x position of a station. The `Y` is for the relative y position of a station. The `Z` is for the relative z position of a station. The `t` is for the relative relative arrival time of a station. The related station is indicated by the number following the `S` letter.
+
+![Exemple picture](img/feature_importance_raw.png)
 
 # References
 
