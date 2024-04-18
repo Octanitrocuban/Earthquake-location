@@ -41,7 +41,7 @@ This repository contain different method to locate earthquake in a higly simplif
  - XY_normalization_y: function to normalize the x, y and z position of the earthquakes.
  - centering_X: function to transform the time between the stations and the earthquake to the relative arrival time.
 
-**example.py**: this script contain exemples on how to use the functions from gradient_descent.py, genetic_alg.py and graph.py.
+**example.py**: this script contain examples on how to use the functions from gradient_descent.py, genetic_alg.py and graph.py.
 
 **xgboost_localisator.py**: this script is made to create, train, test and save a xgboost tree model.
  - hist_dist: function to compute, show and save the figure of the distribution of the distance between the predicted and the true position of the earthquakes.
@@ -59,20 +59,20 @@ For this method, it first create a random earthquake model, with (x, y and z) po
 ### Plots:
 Here are examples and statistics of descent_gradient function: I have made the function runs from 5 000 random initialization (minimum to maximum x and y stations position's, z=-500, and t=-0.5) for a same earthquake. As we can see on the first plot, all models reach a small value of RMSE. The third plot shows that the convergence is mostly a success with a distance between the model and the prediction lower than 15 meters.
 
-![Exemple picture](img/rmse_5000single.png)
+![Example picture](img/rmse_5000single.png)
 
-![Exemple picture](img/dist_5000single.png)
+![Example picture](img/dist_5000single.png)
 
 
 The following plots shows the history of the loss of a model, the history of the time predicted by the model, the history of the depth predicted by the model and the history of x and y prediction on a map with the position of the stations and of the event.
 
-![Exemple picture](img/loss_hist_single_descent.png)
+![Example picture](img/loss_hist_single_descent.png)
 
-![Exemple picture](img/time_hist_single_descent.png)
+![Example picture](img/time_hist_single_descent.png)
 
-![Exemple picture](img/depth_hist_single_descent.png)
+![Example picture](img/depth_hist_single_descent.png)
 
-![Exemple picture](img/map_hist_single_descent.png)
+![Example picture](img/map_hist_single_descent.png)
 
 
 ## Ensemble descent method:
@@ -86,19 +86,19 @@ The first plot is the Root MeanSquare Error distribution of the 5 000 samples af
 
 The second plot shows the distance between the samples and the true targeted event. As for the single method we can see that the distances are quite low, but they aren't as good either. The closet model is still at ~ 8.94 meter of the target. The average distance is also higher. Even if the results are less good, this method is intersting because it train many samples in a lower amount of time which give more robust statistical resluts faster.
 
-![Exemple picture](img/rmse_5000_ensemble.png)
+![Example picture](img/rmse_5000_ensemble.png)
 
-![Exemple picture](img/dist_5000_ensemble.png)
+![Example picture](img/dist_5000_ensemble.png)
 
 The first, second and third plots shows the history of the losses, the time predicted, and the depth predicted by the models while trainig respectivly. The fourth plot show the distribution of x and y model's predictions on a map with the position of the stations and of the event.
 
-![Exemple picture](img/loss_hist_pdf_ed.png)
+![Example picture](img/loss_hist_pdf_ed.png)
 
-![Exemple picture](img/time_hist_pdf_ed.png)
+![Example picture](img/time_hist_pdf_ed.png)
 
-![Exemple picture](img/depth_hist_pdf_ed.png)
+![Example picture](img/depth_hist_pdf_ed.png)
 
-![Exemple picture](img/map_hist_dense_ed.png)
+![Example picture](img/map_hist_dense_ed.png)
 
 
 ## Monte Carlo method:
@@ -112,11 +112,11 @@ The second method of sampling will first define a 4d grid with a total of cells 
 ### Plots:
 The first picture show the position of the sations on X and Y axis with the targeted event and the best earthquake model. The second plot is the distribution of the error of the samples.The third plot is the distribution of the distances between the samples and the targeted event.
 
-![Exemple picture](img/map_of_stations_vect_MC_8M_random.png)
+![Example picture](img/map_of_stations_vect_MC_8M_random.png)
 
-![Exemple picture](img/rmse_MC_8M_random.png)
+![Example picture](img/rmse_MC_8M_random.png)
 
-![Exemple picture](img/dist_MC_8M_random.png)
+![Example picture](img/dist_MC_8M_random.png)
 
 ## Deepening grid search method:
 Time computing for a cut frequency of 10 and 50 epochs is less than 0.1 second.
@@ -129,13 +129,13 @@ The main idea of this method is to zoom iteratively into the space of the parame
 ### Plots:
 The first plot shows the evolution of the loss through iterations. We can see it will some times increase. This comes from the fact that we are evaluating a cell and so a surface only based one one point. Thus when we zoom in, the new dots will not be at the same positionS (even if they are in the same cell) and may all have higher loss. Yet the model is converging rapidly. The second plot and third plot are the evolution of time of emission and depth respectively. We can see that they are having big variation at the start of the training before converging. The times where the depth and time have high changes are correlated with the increase of error in the loss curve. The last plot shows the evolution following x and y-axis of the model. We can see that the position of the model and of the targeted event are almost perfectly superposed.
 
-![Exemple picture](img/loss_hist_deepen_grid.png)
+![Example picture](img/loss_hist_deepen_grid.png)
 
-![Exemple picture](img/time_hist_deepen_grid.png)
+![Example picture](img/time_hist_deepen_grid.png)
 
-![Exemple picture](img/depth_hist_deepen_grid.png)
+![Example picture](img/depth_hist_deepen_grid.png)
 
-![Exemple picture](img/map_hist_deepen_grid.png)
+![Example picture](img/map_hist_deepen_grid.png)
 
 
 ## Genetic algorithm method:
@@ -162,9 +162,9 @@ We can see on the first plot the distribution of the root mean square error of 5
 
 The second plot shows the distribution of the euclidean distance between the best model of each run and the true position of the earthquake. We can see that all of the model have a distance lower than one meter wich is fairly small. As written before, the shape of the distribution (approxiamtively a lognormal) comes from the use of the treshold.
 
-![Exemple picture](img/rmse_5000_gen_alg_randuniform.png)
+![Example picture](img/rmse_5000_gen_alg_randuniform.png)
 
-![Exemple picture](img/dist_5000_gen_alg_randuniform.png)
+![Example picture](img/dist_5000_gen_alg_randuniform.png)
 
 The first plot shows the evolution of the loss through the gradient descent. We can see that it only took fourteen epochs (including the random initialization step) to reach the treshold of $1*10^{-6}$. Note that the rmse of the first epoch (at index 0) is already low compared to many of the other method which usualy start with rmse closer to 0.3. An other thing we can say is that the steep of loss is constant for all of the epochs. This means that the loss would probably get even lower in a short amount of iteration.
 
@@ -174,13 +174,13 @@ The third plot shows the evolution of the predicted depth of the earthquake.
 
 The four plot shows the evolution of the predicted x and y position of the earthquake.
 
-![Exemple picture](img/loss_hist_gen_alg_randuniform.png)
+![Example picture](img/loss_hist_gen_alg_randuniform.png)
 
-![Exemple picture](img/time_hist_gen_alg_randuniform.png)
+![Example picture](img/time_hist_gen_alg_randuniform.png)
 
-![Exemple picture](img/depth_hist_gen_alg_randuniform.png)
+![Example picture](img/depth_hist_gen_alg_randuniform.png)
 
-![Exemple picture](img/map_hist_gen_alg_randuniform.png)
+![Example picture](img/map_hist_gen_alg_randuniform.png)
 
 
 ## XGBoost method:
@@ -198,20 +198,25 @@ The data to predict will be the x, y and z position of the earthquakes. The inpu
 
 ### Plots:
 
-![Exemple picture](img/distance_train_xgb_raw.png)
+The three following plots shows the distribution of the distance between the prediction of the model and the real position.
 
-![Exemple picture](img/distance_valid_xgb_raw.png)
+The first plot is for the distribution on the train set wich shows best result with and average distance of 14.36 meters. As we can see, the results are worst than with any other method even on the train set. This is even more the case when we compare the results of the validation and test set. This means that the models didn't well learn how the relative arrival time was linked to the position of the earthquakes. Yet, these results also shows that the model still make better predictions than a random process. With Monte Carlo method, we can see that the average of true to random predictions distance have an average of approximatively 500 meters.
 
-![Exemple picture](img/distance_test_xgb_raw.png)
+A reason to explain the bad predictions given by the model could be an insufficient number of samples for the training. 56 000 samples may not be enough for the model and let the space to sparsely sampled. What could be done to test this hypotethis would be to recreate a new set of data, but with a higger resampling rate of the cells (from 10 to 50 for example).
 
-The file ./img/3d_positions_dist_error_test_raw.html is a three dimensional plot of the positions predicted by a trained model. The train was done on raw train
-data with the position of the stations. The colorbar shows the distance between the predition and the true position. The data used for this plot is the test set.
+![Example picture](img/distance_train_xgb_raw.png)
+
+![Example picture](img/distance_valid_xgb_raw.png)
+
+![Example picture](img/distance_test_xgb_raw.png)
+
+The file ./img/3d_positions_dist_error_test_raw.html is a three dimensional plot of the positions predicted by a trained model. The train was done on raw train data with the position of the stations. The colorbar shows the distance between the predition and the true position. The data used for this plot is the test set.
 
 ### Feature importances:
 
 In the following plot, the `X` is for the relative x position of a station. The `Y` is for the relative y position of a station. The `Z` is for the relative z position of a station. The `t` is for the relative relative arrival time of a station. The related station is indicated by the number following the `S` letter.
 
-![Exemple picture](img/feature_importance_raw.png)
+![Example picture](img/feature_importance_raw.png)
 
 # References
 
