@@ -1,7 +1,7 @@
 # Earthquake-location
 This repository contain different method to locate earthquake in a higly simplified environment. 
 
-### There are 5 scripts:
+### There are 6 scripts:
 **gradient_descent.py**: this module contains function to compute gradient descent through exploration algorithms.
   - print_sample_array: function to plot samples array as dictionary.
   - centrering: function to normalise (centralise) stations and event if given.
@@ -42,6 +42,8 @@ This repository contain different method to locate earthquake in a higly simplif
  - centering_X: function to transform the time between the stations and the earthquake to the relative arrival time.
 
 **example.py**: this script contain exemples on how to use the functions from gradient_descent.py, genetic_alg.py and graph.py.
+
+**xgboost_localisator.py**: this script is made to create, train, test and save a xgboost tree model.
 
 ### Running:
 To run the scripts, you can execute them from IDE (such as PyCharm or Spyder) or use comand line : ```python script.py```.
