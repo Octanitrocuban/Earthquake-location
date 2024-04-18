@@ -70,6 +70,9 @@ def hist_dist(y_true, ypred, save_path, type_set):
 # type of data used to train the model
 use_type = 'raw'
 
+# If we use the position of the stations as input features
+use_position = True
+
 # To save or not the train xgboost model in json file
 save_model = True
 
@@ -84,12 +87,18 @@ plot3d = True
 # Set to use for the 3d plot
 set_3d = 'test'
 
+# Plot the features importance or not
+show_fi = True
 
 # VERIFICATIONS
 
 if (use_type != 'raw')&(use_type != 'norm'):
 	raise ValueError("The type of data used to train the model must be "+
 					 "'norm' or 'raw'. Get `use_type = "+str(use_type)+"`")
+
+if type(use_position) != bool:
+	raise ValueError("`use_position` model must be a boolean. Get `type("+
+					 "use_position) = "+str(type(use_position))+"`")
 
 if type(save_model) != bool:
 	raise ValueError("`save_model` model must be a boolean. Get `type("+
@@ -107,6 +116,10 @@ if (set_3d != 'train')&(set_3d != 'valid')&(set_3d != 'test'):
 	raise ValueError("The 3d plots must be used on: 'train', 'valid' or "+
 					 "'test'.Get `set_3d = "+str(set_3d)+"`")
 
+if type(show_fi) != bool:
+	raise ValueError("`show_fi` model must be a boolean. Get `type(show_fi"+
+					 ") = "+str(type(show_fi))+"`")
+
 
 # To only load needed data and save memory
 if use_type == 'norm':
@@ -118,6 +131,10 @@ if use_type == 'norm':
 
 	test = np.load('../data/test_norm.npy', allow_pickle=True)[0]
 	X_test, y_test = test['X_test'], test['y_test']
+	if use_position == False:
+		X_train = X_train[:, np.array([3, 7, 11, 15, 19])]
+		X_valid = X_valid[:, np.array([3, 7, 11, 15, 19])]
+		X_test = X_test[:, np.array([3, 7, 11, 15, 19])]
 
 parameters = np.load('../data/parameters.npy', allow_pickle=True)[0]
 min_X = parameters['min_X']
@@ -140,20 +157,25 @@ X_valid_raw, y_valid_raw = (valid_raw['X_valid_raw'],
 test_raw = np.load('../data/test_raw.npy', allow_pickle=True)[0]
 X_test_raw, y_test_raw = (test_raw['X_test_raw'], test_raw['y_test_raw'])
 
+if use_position == False:
+	X_train_raw = X_train_raw[:, np.array([3, 7, 11, 15, 19])]
+	X_valid_raw = X_valid_raw[:, np.array([3, 7, 11, 15, 19])]
+	X_test_raw = X_test_raw[:, np.array([3, 7, 11, 15, 19])]
+
 # To automatically create a folder where the results will be saved, if asked
 TODAY = datetime.today()
 folder = '../xgboost/'
-if TODAY.day < 10:
-	folder += '0'+str(TODAY.day)+'_'
-else:
-	folder += str(TODAY.day)+'_'
+folder += str(TODAY.year)+'_'
 
 if TODAY.month < 10:
 	folder += '0'+str(TODAY.month)+'_'
 else:
 	folder += str(TODAY.month)+'_'
-    
-folder += str(TODAY.year)+'_'
+
+if TODAY.day < 10:
+	folder += '0'+str(TODAY.day)+'_'
+else:
+	folder += str(TODAY.day)+'_'
 
 if TODAY.hour < 10:
 	folder += '0'+str(TODAY.hour)+'_'
@@ -174,6 +196,7 @@ print('Folder:', folder)
 # Save in a text file the hyperparameters
 with open(folder+'params.txt', 'w') as file:
 	file.write('use_type: '+use_type+'\n')
+	file.write('use_position: '+str(use_position)+'\n')
 	file.write('save_model: '+str(save_model)+'\n')
 	file.write('make_distances: '+str(make_distances)+'\n')
 	file.write('plot3d: '+str(plot3d)+'\n')
@@ -290,3 +313,36 @@ if make_distances:
 
 		# To save the interactive figure in html file
 		plot_figure.write_html(folder+set_3d+'_cube.html')
+
+if use_position:
+	fnames = np.array(['X_S1', 'Y_S1', 'Z_S1', 't_S1',
+					   'X_S2', 'Y_S2', 'Z_S2', 't_S2',
+					   'X_S3', 'Y_S3', 'Z_S3', 't_S3',
+					   'X_S4', 'Y_S4', 'Z_S4', 't_S4',
+					   'X_S5', 'Y_S5', 'Z_S5', 't_S5'])
+
+else:
+	fnames = np.array(['t_S1', 't_S2', 't_S3', 't_S4', 't_S5'])
+
+importance = model.feature_importances_
+rank = np.argsort(importance)
+importance = importance[rank]
+fnames = fnames[rank]
+y_pos = np.arange(len(fnames))
+with open(folder+'params.txt', 'a') as file:
+	file.write('Feature importance:\n')
+	for i in y_pos[::-1]:
+		file.write(fnames[i]+': '+str(importance[i])+'\n')
+
+	file.write('\n')
+
+if show_fi:
+	plt.figure(figsize=(8, 12))
+	plt.grid(True, zorder=1)
+	plt.hlines(y_pos, 0, importance, lw=10)
+	plt.xlabel('Feature importance', fontsize=16)
+	plt.xlim(0, np.max(importance)*1.02)
+	plt.xticks(fontsize=15)
+	plt.yticks(y_pos, fnames, fontsize=15)
+	plt.savefig(folder+'feature_importance.png', bbox_inches='tight')
+	plt.show()
