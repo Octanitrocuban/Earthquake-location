@@ -216,6 +216,8 @@ The file ./img/3d_positions_dist_error_test_raw.html is a three dimensional plot
 
 In the following plot, the `X` is for the relative x position of a station. The `Y` is for the relative y position of a station. The `Z` is for the relative z position of a station. The `t` is for the relative relative arrival time of a station. The related station is indicated by the number following the `S` letter.
 
+We can see that the model deos not give any weight to the position of the stations and to the relative arrival time of the station number 4. This isn't much surprinsing since these features are constant and thus cannot be used as they are to discriminate the samples for the xgboost model.
+.
 ![Example picture](img/feature_importance_raw.png)
 
 # References
