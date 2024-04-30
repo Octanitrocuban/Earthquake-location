@@ -1,14 +1,19 @@
 '''
 Script to train, test and save a xgboost tree model.
 '''
+# utils
 import numpy as np
-import xgboost as xgb
 from scipy.spatial.distance import cdist
 from datetime import datetime
+import os
+
+# graphical
 import matplotlib.pyplot as plt
 import plotly.graph_objs as go
 import plotly
-import os
+
+# Machine Learning
+import xgboost as xgb
 
 # FUNCTIONS
 
@@ -43,7 +48,7 @@ def hist_dist(y_true, ypred, save_path, type_set):
 	quantile95 = np.quantile(distances_, 0.95)
 
 	plt.figure(figsize=(12, 5))
-	plt.title('Euclidienne distance: prediction - true / '+type_set)
+	plt.title('Euclidian distance: prediction - true / '+type_set)
 	plt.vlines(centers_b_, 0, counts_pdf_, lw=3.5)
 	plt.vlines(median, -1, 2, color='r',
 				label='Median='+str(round(median, 2))+' m')
