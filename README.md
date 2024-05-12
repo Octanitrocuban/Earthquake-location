@@ -184,7 +184,7 @@ The four plot shows the evolution of the predicted x and y position of the earth
 
 
 ## XGBoost method:
-Time computing for the prdiction of one (or many) earthquakes is very low, but as we will see, it does not give very great results.
+Time computing for the prediction of one (or many) earthquakes is very low, but as we will see, it does not give very great results.
 
 ### Explanations:
 XGBoost (eXtreme Gradient Boosting) was introduced by [Tianqi and Guestrin] in 2016 in their paper: "XGBoost: A Scalable Tree Boosting System".
@@ -220,6 +220,19 @@ We can see that the model deos not give any weight to the position of the statio
 .
 ![Example picture](img/feature_importance_raw.png)
 
+
+## Artificial Neural Networl (ANN) method:
+
+
+### Explanations:
+ANN are a type of machine learning algorithm. Its creation was inpired by the biological neural network in animals.
+It can be seen as a network of small function working together to approximate a bigger, abstract and complex unknow function.
+
+
+### Plots:
+
+
+
 # References
 
 Tianqi, C., and Guestrin, C.. (2016) "XGBoost: A Scalable Tree Boosting System." Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, ACM. Crossref, https://doi.org/10.1145/2939672.2939785.
@@ -248,4 +261,7 @@ Implementation of genetic algorithm method.
 
 #### 3.0
 Implementation of XGBoost method.
+
+#### 4.0
+Implementation of artificial neural network method.
 
