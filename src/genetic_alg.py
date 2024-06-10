@@ -232,10 +232,10 @@ def evolution(size, n_g, noise, limites, stations, p_surv, combinaison,
 
 	Returns
 	-------
-	loss : numpy.ndarray
-		Loss history of the best event (lowest loss) at each iteration.
 	best : numpy.ndarray
 		History of the best event (with the lowest loss).
+	loss : numpy.ndarray
+		Loss history of the best event (lowest loss) at each iteration.
 
 	"""
 	p2p = int(2*patience)
@@ -277,4 +277,4 @@ def evolution(size, n_g, noise, limites, stations, p_surv, combinaison,
 	best = np.array(best)
 	last = np.argwhere(loss == np.min(loss))[-1]
 	print_sample_array(best[last[-1]], before='Best event = ')
-	return loss, best
+	return best, loss
