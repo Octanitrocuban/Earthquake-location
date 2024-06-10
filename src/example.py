@@ -146,7 +146,7 @@ if 'genetic_alg' in to_do:
 	pop_length = 10000
 	num_epoch = 100000
 	noise_type = 'uniform'
-	trehold = 1e-6
+	trehold = 1e-5
 	alpha = 0.20
 	repart = [int(pop_length*alpha),
 			  int(pop_length*alpha/2),
