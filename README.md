@@ -139,7 +139,7 @@ The first plot shows the evolution of the loss through iterations. We can see it
 
 
 ## Genetic algorithm method:
-Time computing with the parameter given in the example script to reach value of rmse lower than 1e-6 is less than 0.1 second.
+Time computing with the parameter given in the example script to reach value of rmse lower than 1e-5 is less than 0.1 second.
 
 ### Explanations:
 This method works by simulating the evolution of a species under constant environmental selection pressures. The idea is to have the survival of the fittest which minimises the error.
