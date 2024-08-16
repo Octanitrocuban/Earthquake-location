@@ -227,6 +227,9 @@ We can see that the model deos not give any weight to the position of the statio
 ### Explanations:
 ANN are a type of machine learning algorithm. Its creation was inpired by the biological neural network in animals.
 It can be seen as a network of small function working together to approximate a bigger, abstract and complex unknow function.
+I have only tested dense neural network, with different depth, width, activation function and dropout.
+
+We can see these ANNs as a stack the equation: Y${_i+1}$ = $f(W^T*Y_i + B)$
 
 
 ### Plots:
