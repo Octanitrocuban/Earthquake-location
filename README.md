@@ -229,7 +229,7 @@ ANN are a type of machine learning algorithm. Its creation was inpired by the bi
 It can be seen as a network of small function working together to approximate a bigger, abstract and complex unknow function.
 I have only tested dense neural network, with different depth, width, activation function and dropout.
 
-We can see these ANNs as a stack the equation: Y$_{i+1}$ = $f(W^T*Y_i + B)$
+We can see these ANNs as a stack the equation: $Y_{i+1} = f(W^T*Y_i + B)$
 
 
 ### Plots:
