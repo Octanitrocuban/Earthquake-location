@@ -31,20 +31,17 @@ This repository contain different method to locate earthquake in a higly simplif
   - show_density_history_ed: function to show the evolution of the variables for the ensemble descent method through density plots.
   - plot_diff_cost_evol: function to plot the change in variation of the rmse through the epochs.
   - plot_diff_cost_evol_ed: function to plot the change in variation of the rmse through the epochs for the ensemble descent method.
+  - hist_dist: function to compute, show and save the figure of the distribution of the distance between the predicted and the true position of the earthquakes.
 
 **create_data.py**: this script is used to create data to train and test machine learning algorithms.
- - compute_box: function to compute the center of the cells of a 3d box.
- - noise_box: function to compute random new positions for each X i-th positions within given boundaries.
- - uppsample_box: function to compute a random sampling of the cells of the box.
+ - bridson_algorithm: function to create a set of 3d earthquakes position.
+ - _is_valid_position: function to check if the candidate position is valid.
  - compute_timing: function to compute the arrival time of the stations and the noise that will be add to them.
- - XY_normalization_X: function to normalize the x and y position of the stations in the X matrix.
- - XY_normalization_y: function to normalize the x, y and z position of the earthquakes.
  - centering_X: function to transform the time between the stations and the earthquake to the relative arrival time.
 
 **example.py**: this script contain examples on how to use the functions from gradient_descent.py, genetic_alg.py and graph.py.
 
 **xgboost_localisator.py**: this script is made to create, train, test and save a xgboost tree model.
- - hist_dist: function to compute, show and save the figure of the distribution of the distance between the predicted and the true position of the earthquakes.
 
 
 ### Running:
@@ -192,9 +189,9 @@ XGBoost (eXtreme Gradient Boosting) was introduced by [Tianqi and Guestrin] in 2
 For this method, I used the xgboost librabry from Distributed (Deep) Machine Learning Community (DMLC) XGBoost [https://xgboost.readthedocs.io/en/latest/index.html].
 For the booster type, I used `dart` intorduced by Korlakai Vinayak and Gilad-Bachrach.
 
-I first created train, valid and test data with `create_data.py` script. I used 20 cut per space dimensions (resulting in $20^{3}$ cells of 50 meters width), witch I have randomly splited between the train, valid and test set with 70%, 15% and 15% respectively. Then for each cell I sample it by creating 10 random earthques located in them. After that it compute the time travel for all of the stations and add noise proportionally to this time travelling. Finally it compute the relative arrival time with the stations number 4 (index 3) compared to the other. The fourth station beeing the closet to the center of the network. In the end I had 56 000 samples in train, 12 000 in valid and 12 000 in test.
+I first created train, valid and test data with `create_data.py` script. It use Bridson algorithm to run a 3d poisson disc sampling to generate earthquakes positions. I used a minimum distance of 10 meters with a trick on the distance to ensure that it is well respected. The travel time are computed for the stations with adding normal noise proportionally to this time travel. The detecting time are processed to become relative with the most centered station (the 4th one, index 3). The samples are then randomly splited between the train, valid and test set with 70%, 15% and 15% respectively. Finally the earthquakes and stations positions are normalized. It makes 84 655 train, 18 140 valid and 18 141 test samples.
 
-The data to predict will be the x, y and z position of the earthquakes. The input data will be the relative arrival time and if asked for the position of the stations.
+The data to predict will be the x, y and z position of the earthquakes. The input data will be the relative arrival time and the position of the stations.
 
 ### Plots:
 
